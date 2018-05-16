@@ -1,7 +1,7 @@
 package com.medsec.util;
 
 import com.medsec.base.Config;
-import com.medsec.mapper.TestMapper;
+import com.medsec.dao.TestMapper;
 import org.apache.commons.configuration2.PropertiesConfiguration;
 import org.apache.commons.configuration2.builder.fluent.Configurations;
 import org.apache.commons.dbcp2.BasicDataSourceFactory;
@@ -17,7 +17,6 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.sql.DataSource;
 import java.io.File;
-import java.io.FileInputStream;
 import java.util.Properties;
 
 public class ConfigListener implements ServletContextListener{
