@@ -1,9 +1,8 @@
 package com.medsec.api;
 
-import com.medsec.base.TestType;
-import com.medsec.mapper.TestMapper;
+import com.medsec.entity.TestType;
+import com.medsec.dao.TestMapper;
 import com.medsec.util.ConfigListener;
-import com.medsec.util.Database;
 import com.medsec.util.Response;
 import org.apache.ibatis.session.SqlSession;
 import org.glassfish.jersey.server.JSONP;
@@ -12,9 +11,7 @@ import org.simplejavamail.email.EmailBuilder;
 import org.simplejavamail.mailer.Mailer;
 import org.simplejavamail.mailer.config.TransportStrategy;
 
-import javax.servlet.ServletContext;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import java.util.regex.Pattern;
 
 /**

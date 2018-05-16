@@ -1,4 +1,4 @@
-package com.medsec.base;
+package com.medsec.entity;
 
 public class TestType {
 
