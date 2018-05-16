@@ -1,7 +1,11 @@
 package com.medsec.api;
 
+import com.medsec.base.TestType;
+import com.medsec.mapper.TestMapper;
+import com.medsec.util.ConfigListener;
 import com.medsec.util.Database;
 import com.medsec.util.Response;
+import org.apache.ibatis.session.SqlSession;
 import org.glassfish.jersey.server.JSONP;
 import org.simplejavamail.email.Email;
 import org.simplejavamail.email.EmailBuilder;
@@ -33,6 +37,16 @@ public class Example {
     @Produces({"application/javascript", "application/json"})
     public String echo(
             @DefaultValue("Hello world") @QueryParam("content") String content) {  //Extract parameters from url query string
+
+        try (SqlSession session = ConfigListener.sqlSessionFactory.openSession()) {
+            TestMapper mapper = session.getMapper(TestMapper.class);
+            TestType test = mapper.selectFile(1);
+            System.out.println(test.getFileId());
+            System.out.println(test.getFileTitle());
+        }
+
+
+
         return content;
     }
 

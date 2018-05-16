@@ -1,9 +1,16 @@
 package com.medsec.util;
 
 import com.medsec.base.Config;
+import com.medsec.mapper.TestMapper;
 import org.apache.commons.configuration2.PropertiesConfiguration;
 import org.apache.commons.configuration2.builder.fluent.Configurations;
 import org.apache.commons.dbcp2.BasicDataSourceFactory;
+import org.apache.ibatis.mapping.Environment;
+import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.apache.ibatis.transaction.TransactionFactory;
+import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -23,6 +30,7 @@ public class ConfigListener implements ServletContextListener{
     private static final String PROP_DBCP_DEV = "/WEB-INF/classes/dbcp_local.properties";
 
     public static DataSource dataSource;
+    public static SqlSessionFactory sqlSessionFactory;
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -45,6 +53,15 @@ public class ConfigListener implements ServletContextListener{
             // init Database
             dataSource = BasicDataSourceFactory.createDataSource(properties);
             app.setAttribute("dataSource", dataSource);
+
+            TransactionFactory transactionFactory = new JdbcTransactionFactory();
+            Environment environment = new Environment("development", transactionFactory, dataSource);
+            Configuration configuration = new Configuration(environment);
+            configuration.addMapper(TestMapper.class);
+            sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
+
+            app.setAttribute("sqlSessionFactory", sqlSessionFactory);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
