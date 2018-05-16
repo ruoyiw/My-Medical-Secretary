@@ -1,6 +1,5 @@
 package com.medsec.api;
 
-
 import com.medsec.dao.AppointmentMapper;
 import com.medsec.entity.Appointment;
 import com.medsec.util.Authentication;
@@ -14,9 +13,45 @@ import org.json.simple.JSONObject;
 import javax.ws.rs.*;
 import java.util.List;
 
+/**
+ * RESTful APIs for appointments.
+ *
+ */
 @Path("appointment")
 public class AppointmentAPI {
 
+    /**
+     * <b>Get an appointment with its ID.</b>
+     * <br>Parameters are passed via QueryParams.
+     * <br>JSONP supported, subject to specified Accept Header.
+     * <pre>{@code
+     * Method:
+     *  [GET] /appointment
+     *
+     * Sample response:
+     *  {
+     *   "result": {
+     *     "date": "2018-06-12",
+     *     "duration": 60,
+     *     "note": "Looking after yourself during chemotherapy",
+     *     "date_create": "2018-05-16 15:23:41.0",
+     *     "is_confirmed": false,
+     *     "date_change": "2018-05-16 15:23:41.0",
+     *     "pid": "1",
+     *     "id": 1,
+     *     "detail": "Education Session",
+     *     "title": "Day Oncology Unit",
+     *     "is_cancelled": false,
+     *     "status": false
+     *   },
+     *   "response": "success"
+     * }
+     * }</pre>
+     * @param pid patient id.
+     * @param id appointment id.
+     * @param token token for authentication
+     * @return Response
+     */
     @GET
     @JSONP(queryParam = "callback")
     @Produces({"application/javascript", "application/json"})
@@ -39,6 +74,27 @@ public class AppointmentAPI {
     }
 
 
+    /**
+     * <b>Get all appointments (filters apply).</b>
+     * <br>Parameters are passed via QueryParams.
+     * <br>JSONP supported, subject to specified Accept Header.
+     * <pre>{@code
+     * Method:
+     *  [GET] /appointment/all
+     *
+     * Sample response:
+     *  {
+     *   "result": [{Appointment..}],
+     *   "response": "success"
+     * }
+     * }</pre>
+     * @param pid patient id.
+     * @param token token for authentication.
+     * @param from_date [optional] only retrieve appointments scheduled after that date.
+     * @param to_date [optional] only retrieve appointments scheduled before that date.
+     * @param is_confirmed [optional] value={true|false} retrieve (un)confirmed appointments.
+     * @return Response
+     */
     @Path("all")
     @GET
     @JSONP(queryParam = "callback")
