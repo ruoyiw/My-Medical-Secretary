@@ -1,6 +1,7 @@
 package com.medsec.util;
 
 import com.medsec.base.Config;
+import com.medsec.dao.AppointmentMapper;
 import com.medsec.dao.PatientMapper;
 import com.medsec.dao.TestMapper;
 import org.apache.commons.configuration2.PropertiesConfiguration;
@@ -59,6 +60,8 @@ public class ConfigListener implements ServletContextListener{
             Configuration configuration = new Configuration(environment);
             configuration.addMapper(TestMapper.class);
             configuration.addMapper(PatientMapper.class);
+            configuration.addMapper(AppointmentMapper.class);
+
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
 
             app.setAttribute("sqlSessionFactory", sqlSessionFactory);
