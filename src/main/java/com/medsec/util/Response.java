@@ -1,5 +1,6 @@
 package com.medsec.util;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 
@@ -27,11 +28,20 @@ public class Response {
     }
 
     /**
-     * Generates a success response with customised content.
+     * Generates a success response with customised JSON Object.
      * @param result The content to be composed in the response.
      * @return Composed JSON response message.
      */
     public static String success(JSONObject result) {
+        return composeResponse(true, result);
+    }
+
+    /**
+     * Generates a success response with customised JSON Array.
+     * @param result The content to be composed in the response.
+     * @return Composed JSON response message.
+     */
+    public static String success(JSONArray result) {
         return composeResponse(true, result);
     }
 
