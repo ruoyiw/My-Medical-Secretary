@@ -2,6 +2,7 @@ package com.medsec.api;
 
 import com.medsec.entity.TestType;
 import com.medsec.dao.TestMapper;
+import com.medsec.util.Authentication;
 import com.medsec.util.ConfigListener;
 import com.medsec.util.Response;
 import org.apache.ibatis.session.SqlSession;
@@ -35,12 +36,7 @@ public class Example {
     public String echo(
             @DefaultValue("Hello world") @QueryParam("content") String content) {  //Extract parameters from url query string
 
-        try (SqlSession session = ConfigListener.sqlSessionFactory.openSession()) {
-            TestMapper mapper = session.getMapper(TestMapper.class);
-            TestType test = mapper.selectFile(1);
-            System.out.println(test.getFileId());
-            System.out.println(test.getFileTitle());
-        }
+        System.out.println(Authentication.auth("1", "qwerty"));
 
 
 
