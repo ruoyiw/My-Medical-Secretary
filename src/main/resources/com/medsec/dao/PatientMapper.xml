@@ -15,4 +15,7 @@
         select * from Patient where email=#{email}
     </select>
 
+    <select id="logIn" resultType="com.medsec.entity.Patient">
+        UPDATE Patient set token=#{token}, token_expire_date=#{token_expire_date} where id=#{id}
+    </select>
 </mapper>

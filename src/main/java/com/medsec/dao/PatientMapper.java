@@ -10,4 +10,8 @@ public interface PatientMapper {
 
     //select patient by email
     Patient selectbyEmail(String email);
+
+    //patient log in
+    void logIn(Patient patient);
+
 }
