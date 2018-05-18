@@ -11,8 +11,40 @@ import org.json.simple.JSONObject;
 
 import javax.ws.rs.*;
 
+/**
+ * RESTful APIs for PatientAccount.
+ */
 @Path("patient")
 public class PatientAPI {
+	/**
+	 * <b>Patient sign up.</b>
+	 * <br>Parameters are passed via FormParam.
+	 * <br>JSONP supported, subject to specified Accept Header.
+	 * <pre>{@code
+	 * Method:
+	 *  [POST] /patient
+	 *
+	 * Sample response(register successfully):
+	 *  {
+	 *   "status": "register successfully",
+	 *   "response": "success"
+	 * }
+	 * Sample response(register unsuccessfully):
+	 *  {
+	 *   "status": "invalid login message, please fill all the required message",
+	 *   "status": "the provided email is not match with what you provide with clinic",
+	 *   "status": "your personal information is not match with what you provide with clinic",
+	 *   "response": "error"
+	 * }
+	 *
+	 * }</pre>
+	 * @param password patient account password
+	 * @param surname patient surname
+	 * @param firstname patient firstname
+	 * @param email patient register email
+	 * @param middlename patient middlename
+	 * @return Response
+	 */
 	@POST
 	@JSONP(queryParam = "callback")
 	@Produces({"application/javascript","application/json"})
@@ -67,6 +99,35 @@ public class PatientAPI {
 		}
 	}
 
+	/**
+	 * <b>Patient login.</b>
+	 * <br>Parameters are passed via FormParam.
+	 * <br>JSONP supported, subject to specified Accept Header.
+	 * <pre>{@code
+	 * Method:
+	 *  [POST] /patient/login
+	 *
+	 * Sample response(login successfully):
+	 *  {
+	 *  "result": {
+	 *     "token": "token"
+	 *   },
+	 *   "response": "success"
+	 * }
+	 * Sample response(register unsuccessfully):
+	 *  {
+	 *   "status": "invalid register message, please fill all the required message",
+	 *   "status": "the provided email is not match with what you provide with clinic",
+	 *   "status": "your haven't signed up you account yet",
+	 *   "status": "your password is not correct",
+	 *   "response": "error"
+	 * }
+	 *
+	 * }</pre>
+	 * @param password patient login password
+	 * @param email patient login email
+	 * @return Response
+	 */
     @Path("login")
     @POST
     @JSONP(queryParam = "callback")
