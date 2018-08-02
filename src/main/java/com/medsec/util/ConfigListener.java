@@ -4,6 +4,7 @@ import com.medsec.base.Config;
 import com.medsec.dao.AppointmentMapper;
 import com.medsec.dao.PatientMapper;
 import com.medsec.dao.TestMapper;
+import com.medsec.dao.UserMapper;
 import org.apache.commons.configuration2.PropertiesConfiguration;
 import org.apache.commons.configuration2.builder.fluent.Configurations;
 import org.apache.commons.dbcp2.BasicDataSourceFactory;
@@ -43,7 +44,12 @@ public class ConfigListener implements ServletContextListener{
             Configurations configs = new Configurations();
             PropertiesConfiguration config = configs.properties(new File(PROP_CONFIG));
             // access configuration properties
-            Config.USE_DEV_DATABASE_PROFILE = config.getBoolean("USE_DEV_DATABASE_PROFILE", false);
+            Config.USE_DEV_DATABASE_PROFILE = config.getBoolean("USE_DEV_DATABASE_PROFILE", Config.USE_DEV_DATABASE_PROFILE);
+            System.out.println("[CONFIG] Use dev database profile: " + Config.USE_DEV_DATABASE_PROFILE);
+            Config.TOKEN_SECRET_KEY = config.getString("TOKEN_SECRET_KEY", Config.TOKEN_SECRET_KEY);
+            System.out.println("[CONFIG] Token secret key found: " + Config.TOKEN_SECRET_KEY);
+            Config.TOKEN_TTL = config.getLong("TOKEN_TTL", Config.TOKEN_TTL);
+            System.out.println("[CONFIG] Token TTL: " + Config.TOKEN_TTL);
 
             // Load database profile
             System.out.println("Init DB connection pool");
@@ -59,6 +65,7 @@ public class ConfigListener implements ServletContextListener{
             Environment environment = new Environment("development", transactionFactory, dataSource);
             Configuration configuration = new Configuration(environment);
             configuration.addMapper(TestMapper.class);
+            configuration.addMapper(UserMapper.class);
             configuration.addMapper(PatientMapper.class);
             configuration.addMapper(AppointmentMapper.class);
 
