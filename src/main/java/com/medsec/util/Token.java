@@ -15,15 +15,17 @@ public class Token {
     private String uid;
     private String token;
     private String uuid;
+    private Instant iat;
     private Instant exp;
 
     private Token() {
     }
 
-    private Token(String uid, String token, String uuid, Instant exp) {
+    private Token(String uid, String token, String uuid, Instant iat, Instant exp) {
         this.uid = uid;
         this.token = token;
         this.uuid = uuid;
+        this.iat = iat;
         this.exp = exp;
     }
 
@@ -37,6 +39,10 @@ public class Token {
 
     public String getUuid() {
         return uuid;
+    }
+
+    public Instant getIat() {
+        return iat;
     }
 
     public Instant getExp() {
@@ -56,33 +62,39 @@ public class Token {
         return new BigInteger(130, random).toString(32);
     }
 
-    private static String createToken(String uid, UserRole role, Instant exp_date, String jti) {
+    private static Token createToken(String uid, UserRole role, Instant exp, String jti) {
         // Key
         byte[] key = getSecretKey();
 
+        // JTI
+        if (jti == null) jti = getJTI();
+
         // EXP
-        Date exp = Date.from(exp_date);
+        if (exp == null) exp = getExpDate();
+
+        //IAT
+        Instant iat = Instant.now();
 
         // build
-        return Jwts.builder()
+        String token = Jwts.builder()
                 .claim("role", role)
                 .setId(jti)
-                .setExpiration(exp)
+                .setExpiration(Date.from(exp))
+                .setIssuedAt(Date.from(iat))
                 .setSubject(uid)
                 .signWith(SignatureAlgorithm.HS512, key)
                 .compact();
+        return new Token(uid, token, jti, iat, exp);
     }
 
-    public static String createToken(String uid, UserRole role) {
-        return createToken(uid, role, getExpDate(), getJTI());
+    public static Token createToken(String uid, UserRole role) {
+        return createToken(uid, role, null, null);
     }
 
-    public static Token createToken(User u) {
-        Instant exp = getExpDate();
-        String uuid = getJTI();
-        String token = createToken(u.getId(), u.getRole(), exp, uuid);
-        u.token_expire_date(exp).token(token);
-        return new Token(u.getId(), token, uuid, exp);
+    public static User createTokenForUser(User u) {
+        Token token = createToken(u.getId(), u.getRole());
+        u.token_expire_date(token.exp).token(token.token);
+        return u;
     }
 
 
@@ -94,9 +106,10 @@ public class Token {
             Jws<Claims> jws = Jwts.parser().setSigningKey(key).parseClaimsJws(jwt);
             String uid = jws.getBody().getSubject();
             String uuid = jws.getBody().getId();
+            Instant iat = jws.getBody().getIssuedAt().toInstant();
             Instant exp = jws.getBody().getExpiration().toInstant();
 
-            return new Token(uid, jwt, uuid, exp);
+            return new Token(uid, jwt, uuid, iat, exp);
 
             //OK, we can trust this JWT
         } catch(ExpiredJwtException e) {
