@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.UUID;
 
+@Deprecated
 public class TokenGenerator {
 	public static String generateToken(String password){
 		return UUID.fromString(UUID.nameUUIDFromBytes(password.getBytes()).toString()).toString();

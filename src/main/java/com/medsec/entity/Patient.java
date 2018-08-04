@@ -3,6 +3,7 @@ package com.medsec.entity;
 import java.sql.Date;
 import java.sql.Timestamp;
 
+@Deprecated
 public class Patient {
 	private String password;
 	private int id;
