@@ -2,9 +2,10 @@ package com.medsec.entity;
 
 import com.medsec.util.UserRole;
 
+import java.security.Principal;
 import java.time.Instant;
 
-public class User {
+public class User implements Principal {
 	private String password;
 	private String id;
 	private String surname;
@@ -17,6 +18,7 @@ public class User {
 	private String state;
 	private String token;
 	private Instant token_expire_date;
+	private Instant token_valid_from;
     private UserRole role;
 
     public String getPassword() {
@@ -115,6 +117,14 @@ public class User {
         this.token_expire_date = token_expire_date;
     }
 
+    public Instant getToken_valid_from() {
+        return token_valid_from;
+    }
+
+    public void setToken_valid_from(Instant token_valid_from) {
+        this.token_valid_from = token_valid_from;
+    }
+
     public UserRole getRole() {
         return role;
     }
@@ -183,9 +193,18 @@ public class User {
         return this;
     }
 
+    public User token_valid_from(final Instant token_valid_from) {
+        setToken_valid_from(token_valid_from);
+        return this;
+    }
+
     public User role(final UserRole role) {
         setRole(role);
         return this;
     }
 
+    @Override
+    public String getName() {
+        return id;
+    }
 }

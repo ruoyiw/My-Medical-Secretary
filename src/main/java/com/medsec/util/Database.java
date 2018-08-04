@@ -1,10 +1,10 @@
 package com.medsec.util;
 
-import com.medsec.dao.PatientMapper;
 import com.medsec.dao.UserMapper;
-import com.medsec.entity.Patient;
 import com.medsec.entity.User;
 import org.apache.ibatis.session.SqlSession;
+
+import java.time.Instant;
 
 /**
  * This class encapsulates all database queries.
@@ -25,9 +25,10 @@ public class Database {
         return mapper.selectByEmail(email);
     }
 
-    public void updateToken(Token token) {
+    public void updateTokenValidFromDate(String uid, Instant token_valid_from) {
         UserMapper mapper=session.getMapper(UserMapper.class);
-        mapper.updateToken(token);
+        User user = new User().id(uid).token_valid_from(token_valid_from);
+        mapper.updateToken(user);
         session.commit();
     }
 

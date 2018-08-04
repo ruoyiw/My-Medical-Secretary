@@ -1,4 +1,4 @@
-package com.medsec.Interceptor;
+package com.medsec.filter;
 
 import com.medsec.AuthenticationException;
 import com.medsec.entity.User;
@@ -12,13 +12,15 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.ext.Provider;
+import java.security.Principal;
 
 
 @Secured
 @Provider
 @Priority(Priorities.AUTHENTICATION)
-public class SecuredInterceptor implements ContainerRequestFilter {
+public class AuthenticationFilter implements ContainerRequestFilter {
 
     private static final String REALM = "Project_ME";
     private static final String AUTHENTICATION_SCHEME = "Bearer";
@@ -47,10 +49,34 @@ public class SecuredInterceptor implements ContainerRequestFilter {
             Database db = new Database();
             User user = db.getUserById(verifiedToken.getUid());
 
-            // JTI must match. Otherwise the token has been revoked.
-            if (!verifiedToken.getUuid().equals(user.getToken())) {
+            // Must issued after token_valid_from date. Otherwise the token has been revoked.
+            if (verifiedToken.getIat().isBefore(user.getToken_valid_from())) {
                 throw new AuthenticationException(AuthenticationException.TOKEN_EXPIRED);
             }
+
+            // Override the Security Context to inject the user identity.
+            final SecurityContext securityContext = requestContext.getSecurityContext();
+            requestContext.setSecurityContext(new SecurityContext() {
+                @Override
+                public Principal getUserPrincipal() {
+                    return user;
+                }
+
+                @Override
+                public boolean isUserInRole(String s) {
+                    return s.equals(user.getRole().toString());
+                }
+
+                @Override
+                public boolean isSecure() {
+                    return securityContext.isSecure();
+                }
+
+                @Override
+                public String getAuthenticationScheme() {
+                    return AUTHENTICATION_SCHEME;
+                }
+            });
 
         } catch (AuthenticationException e) {
             abortWithUnauthorized(e, requestContext);

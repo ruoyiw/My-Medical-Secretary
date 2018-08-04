@@ -16,11 +16,10 @@
           password= #{password}
         WHERE id= #{id}
     </update>
-    <update id="updateToken" parameterType="com.medsec.util.Token">
+    <update id="updateToken" parameterType="com.medsec.entity.User">
         UPDATE User SET
-          token= #{uuid},
-          token_expire_date= #{exp}
-        WHERE id= #{uid}
+          token_valid_from= #{token_valid_from}
+        WHERE id= #{id}
     </update>
 
 </mapper>

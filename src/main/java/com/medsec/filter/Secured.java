@@ -1,5 +1,7 @@
-package com.medsec.Interceptor;
+package com.medsec.filter;
 
+
+import com.medsec.util.UserRole;
 
 import javax.ws.rs.NameBinding;
 import java.lang.annotation.Retention;
@@ -12,4 +14,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @NameBinding
 @Retention(RUNTIME)
 @Target({TYPE, METHOD})
-public @interface Secured { }
+public @interface Secured {
+    UserRole[] value() default {};
+}
