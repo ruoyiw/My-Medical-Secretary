@@ -8,6 +8,7 @@ import org.json.simple.JSONObject;
  * This class provides methods to generate JSON response.
  * @author Wenzhuo Mi
  */
+@Deprecated
 public class Response {
 
     /**
