@@ -29,7 +29,7 @@ public void someMethod(@Context SecurityContext securityContext) {
 - Use HTTP Status Code (make use of HTTP Headers)
   - insert customised
 
-```
+```java
 // Use javax.ws.rs.core.Response as return type
 public Response someMethod(User user) {
 
