@@ -1,7 +1,7 @@
 package com.medsec.api;
 
-import com.medsec.ArgumentException;
-import com.medsec.AuthenticationException;
+import com.medsec.util.ArgumentException;
+import com.medsec.util.AuthenticationException;
 import com.medsec.filter.Secured;
 import com.medsec.entity.User;
 import com.medsec.util.Database;

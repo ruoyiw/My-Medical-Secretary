@@ -1,4 +1,4 @@
-package com.medsec;
+package com.medsec.util;
 
 public class AuthenticationException extends Exception {
     public static final String BAD_CREDENTIALS = "Bad credentials";

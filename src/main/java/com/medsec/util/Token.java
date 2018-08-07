@@ -1,6 +1,5 @@
 package com.medsec.util;
 
-import com.medsec.AuthenticationException;
 import com.medsec.base.Config;
 import com.medsec.entity.User;
 import io.jsonwebtoken.*;

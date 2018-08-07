@@ -1,4 +1,4 @@
-package com.medsec;
+package com.medsec.util;
 
 public class ArgumentException extends Exception {
     public static final String MISSING_FIELD = "Missing mandatory field";
