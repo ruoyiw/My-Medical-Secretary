@@ -37,17 +37,13 @@ The authentication is token-based, once your client is issued with a token, send
 
 Some API methods take optional parameters. For GET requests, any parameters not specified as a segment in the path can be passed as an HTTP query string parameter:
 
-    [sample request with query strings lies here]
+    $ curl -i [ROOT URL]/myAppointments/?confirmed=true
 
 For POST and DELETE requests, parameters not included in the URL should be encoded as JSON with a Content-Type of 'application/json':
-
-    [sample request with json parameters lies here]
 
 ## Pagination
 
 Requests that return multiple items will be paginated to 30 items by default. You can specify further pages with the `?page` parameter. you can also set a custom page size up to 100 with the `?per_page` parameter.
-
-    [sample request with pagination lies here]
 
 Note that page numbering is 1-based and omitting the `?page` parameter will return the first page.
 
