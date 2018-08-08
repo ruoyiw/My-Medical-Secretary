@@ -2,7 +2,7 @@
 
 This describes the resources that make up the official Medical Secretary REST API.
 
-<!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=6 orderedList=false} -->
+<!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=2 orderedList=false} -->
 <!-- code_chunk_output -->
 
 * [Schema](#schema)
@@ -10,14 +10,14 @@ This describes the resources that make up the official Medical Secretary REST AP
 * [Parameters](#parameters)
 * [Pagination](#pagination)
 * [Conditional Requests](#conditional-requests)
-* [Cross Origin Resource Sharing (CORS)](#cross-origin-resource-sharing-(cors))
+* [Cross Origin Resource Sharing (CORS)](#cross-origin-resource-sharing-cors)
 * [JSON-P callbacks](#json-p-callbacks)
 
 <!-- /code_chunk_output -->
 
 ## Schema
 
-All API access is currently over HTTP and will migrate to a compulsory HTTPS schema, and accessed from `[ROOT URL]`. All data is sent and received as JSON.
+All API access is currently over HTTP and will eventually migrate to a compulsory HTTPS schema, and accessed from `[ROOT URL]`. All data is sent and received as JSON.
 
 Blank fields are included as `null` instead of being omitted.
 
@@ -27,9 +27,9 @@ All timestamps return in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) form
 
 ## Authentication
 
-In some places, requests that require authentication will return `404 Not Found`, instead of `403 Forbidden`. This is to prevent the accidental leakage of private repositories to unauthorised users.
+In some places, requests that require authentication will return `404 Not Found`, instead of `403 Forbidden`. This is to prevent the accidental leakage of private resources to unauthorised users.
 
-The authentication is token-based, once your client is issued with a token, send it with your further requests in the header:
+The authentication is token-based, all requests expect a valid token in request header unless specified otherwise. Once your client is issued with a token, send it with your further requests in the header:
 
     $ curl -H "Authorization: Bearer TOKEN" [Resource URL]
 
