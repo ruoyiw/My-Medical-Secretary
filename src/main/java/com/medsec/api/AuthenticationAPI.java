@@ -86,7 +86,7 @@ public class AuthenticationAPI {
 
         // Reset token_valid_from
         Database db = new Database();
-        db.updateTokenValidFromDate(uid, Instant.now());
+        db.updateTokenValidFromDate(uid);
         return Response.ok(new DefaultRespondEntity("Success")).build();
     }
 
