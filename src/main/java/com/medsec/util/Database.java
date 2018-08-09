@@ -25,16 +25,18 @@ public class Database {
         return mapper.selectByEmail(email);
     }
 
-    public void updateTokenValidFromDate(String uid, Instant token_valid_from) {
+    public void updateTokenValidFromDate(String uid) {
         UserMapper mapper=session.getMapper(UserMapper.class);
-        User user = new User().id(uid).token_valid_from(token_valid_from);
+        Instant now = Instant.now();
+        User user = new User().id(uid).token_valid_from(now);
         mapper.updateToken(user);
         session.commit();
     }
 
     public void updateUserPassword(String uid, String password) {
         UserMapper mapper = session.getMapper(UserMapper.class);
-        User user  = new User().id(uid).password(password);
+        Instant now = Instant.now();
+        User user  = new User().id(uid).password(password).token_valid_from(now);
         mapper.updatePassword(user);
         session.commit();
     }
