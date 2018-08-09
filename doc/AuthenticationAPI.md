@@ -55,7 +55,6 @@ Content-Type: application/json
   "firstname": "Alex",
   "id": "1",
   "middlename": "Mileston",
-  "name": "1",
   "state": "QLD",
   "street": "97 Masthead Drive",
   "suburb": "ROCKHAMPTON",
