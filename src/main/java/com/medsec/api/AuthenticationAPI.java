@@ -90,7 +90,7 @@ public class AuthenticationAPI {
         return Response.ok(new DefaultRespondEntity("Success")).build();
     }
 
-    private User authenticate(User u) throws ArgumentException, AuthenticationException {
+    public static User authenticate(User u) throws ArgumentException, AuthenticationException {
         if (u.getEmail() == null || u.getPassword() == null)
             throw new ArgumentException();
 
