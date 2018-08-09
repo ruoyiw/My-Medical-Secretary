@@ -32,6 +32,13 @@ public class Database {
         session.commit();
     }
 
+    public void updateUserPassword(String uid, String password) {
+        UserMapper mapper = session.getMapper(UserMapper.class);
+        User user  = new User().id(uid).password(password);
+        mapper.updatePassword(user);
+        session.commit();
+    }
+
     // Database manipulating methods here
 
 }

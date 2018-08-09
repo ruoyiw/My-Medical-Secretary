@@ -21,5 +21,10 @@
           token_valid_from= #{token_valid_from}
         WHERE id= #{id}
     </update>
+    <update id="updatePassword" parameterType="com.medsec.entity.User">
+        UPDATE User SET
+          password= #{password}
+        WHERE id= #{id}
+    </update>
 
 </mapper>
