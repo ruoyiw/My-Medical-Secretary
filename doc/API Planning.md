@@ -55,32 +55,41 @@ public Response someMethod(User user) {
 
 - Seek for a new JSON Library, for better POJO serialisation
 
-## Specific Design
-
-### Authentication
+## Authentication
 
 * Token Generation
-* Token Vertification
+* Token Verification
 * User Identity extraction / passing
-* [API] Logoff
-* [API] Login
 
-### Patients
+## Specific API Design
 
-* Register (C)
-* Change pwd (U)
+### Authentication API
+* ~~Logoff~~
+* Login
+* Renew token
+* Revoke tokens
 
-### Appointments
-* List your appointments (R)
-* Get appointment (R) (304)
-* Get Changelist (R) (304)
-* note (C R)
+### ~~Patients API~~ User API
+* Register ( C )
+* Change password ( U )
 
-* confirmation ? (U)
-* File ?
+### Appointments API
+* List user's appointments ( R, 304 )
+* Get appointment details ( R, 304 )
+* appointment note ( C, R , D )
+* appointment confirmation ( R, U )
+* File (TBC)
 
+### General Information API
+* List doctor resources ( R, 304 )
+* List hospital resources ( R, 304 )
+* List pathology resources ( R, 304 )
+* List radiology resources ( R, 304 )
 
-### General Information
-* 4x get resource list (R) (304)
+### Forms & Files API
+TBC
 
-### Forms & Files
+---
+##### Annotation
+* C, U, R, D: Create, Update, Read, Delete action (CURD)
+* 304: Conditional request supported.
