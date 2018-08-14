@@ -1,30 +1,36 @@
 package com.medsec.entity;
 
-import org.json.simple.JSONObject;
+import com.medsec.util.AppointmentStatus;
 
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.time.Instant;
 
 public class Appointment {
-    private Integer id;
+    private String id;
+    private String uid;
     private String title;
-    private Timestamp date_create;
-    private Timestamp date_change;
-    private Date date;
+    private Instant date_create;
+    private Instant date_change;
+    private Instant date;
+    private Integer duration;
     private String detail;
     private String note;
-    private boolean status;
-    private Integer duration;
-    private boolean is_cancelled;
-    private String pid;
-    private boolean is_confirmed;
+    private String user_note;
+    private AppointmentStatus status;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getTitle() {
@@ -35,28 +41,36 @@ public class Appointment {
         this.title = title;
     }
 
-    public Timestamp getDate_create() {
+    public Instant getDate_create() {
         return date_create;
     }
 
-    public void setDate_create(Timestamp date_create) {
+    public void setDate_create(Instant date_create) {
         this.date_create = date_create;
     }
 
-    public Timestamp getDate_change() {
+    public Instant getDate_change() {
         return date_change;
     }
 
-    public void setDate_change(Timestamp date_change) {
+    public void setDate_change(Instant date_change) {
         this.date_change = date_change;
     }
 
-    public Date getDate() {
+    public Instant getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Instant date) {
         this.date = date;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
     }
 
     public String getDetail() {
@@ -75,67 +89,75 @@ public class Appointment {
         this.note = note;
     }
 
-    public boolean isStatus() {
+    public String getUser_note() {
+        return user_note;
+    }
+
+    public void setUser_note(String user_note) {
+        this.user_note = user_note;
+    }
+
+    public AppointmentStatus getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(AppointmentStatus status) {
         this.status = status;
     }
 
-    public Integer getDuration() {
-        return duration;
+    public Appointment id(final String id) {
+        this.id = id;
+        return this;
     }
 
-    public void setDuration(Integer duration) {
+    public Appointment uid(final String uid) {
+        this.uid = uid;
+        return this;
+    }
+
+    public Appointment title(final String title) {
+        this.title = title;
+        return this;
+    }
+
+    public Appointment date_create(final Instant date_create) {
+        this.date_create = date_create;
+        return this;
+    }
+
+    public Appointment date_change(final Instant date_change) {
+        this.date_change = date_change;
+        return this;
+    }
+
+    public Appointment date(final Instant date) {
+        this.date = date;
+        return this;
+    }
+
+    public Appointment duration(final Integer duration) {
         this.duration = duration;
+        return this;
     }
 
-    public boolean isIs_cancelled() {
-        return is_cancelled;
+    public Appointment detail(final String detail) {
+        this.detail = detail;
+        return this;
     }
 
-    public void setIs_cancelled(boolean is_cancelled) {
-        this.is_cancelled = is_cancelled;
+    public Appointment note(final String note) {
+        this.note = note;
+        return this;
     }
 
-    public String getPid() {
-        return pid;
+    public Appointment user_note(final String user_note) {
+        this.user_note = user_note;
+        return this;
     }
 
-    public void setPid(String pid) {
-        this.pid = pid;
+    public Appointment status(final AppointmentStatus status) {
+        this.status = status;
+        return this;
     }
 
-    public boolean isIs_confirmed() {
-        return is_confirmed;
-    }
-
-    public void setIs_confirmed(boolean is_confirmed) {
-        this.is_confirmed = is_confirmed;
-    }
-
-
-    @SuppressWarnings("unchecked")
-    public JSONObject toJson() {
-        JSONObject jo = new JSONObject();
-        jo.put("id", id);
-        jo.put("title", title);
-        jo.put("date_create", date_create.toString());
-        jo.put("date_change", date_change.toString());
-        jo.put("date", date.toString());
-        jo.put("detail", detail);
-        jo.put("note", note);
-        jo.put("status", status);
-        jo.put("duration", duration);
-        jo.put("is_cancelled", is_cancelled);
-        jo.put("pid", pid);
-        jo.put("is_confirmed", is_confirmed);
-        return jo;
-    }
-
-    @Override
-    public String toString() {
-        return toJson().toString();
-    }
 }
