@@ -1,7 +1,11 @@
 package com.medsec.util;
 
 public class DefaultRespondEntity {
-    private String message;
+    public static final String SUCCESS = "Success";
+    private String message = SUCCESS;
+
+    public DefaultRespondEntity() {
+    }
 
     public DefaultRespondEntity(String message) {
         this.message = message;

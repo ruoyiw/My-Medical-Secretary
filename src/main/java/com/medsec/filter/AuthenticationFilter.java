@@ -1,6 +1,6 @@
 package com.medsec.filter;
 
-import com.medsec.AuthenticationException;
+import com.medsec.util.AuthenticationException;
 import com.medsec.entity.User;
 import com.medsec.util.Database;
 import com.medsec.util.DefaultRespondEntity;
