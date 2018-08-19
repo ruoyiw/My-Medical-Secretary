@@ -39,6 +39,9 @@ public class ConfigListener implements ServletContextListener{
         try {
             ServletContext app = sce.getServletContext();
 
+            //init Log4j2
+            System.setProperty("java.util.logging.manager","org.apache.logging.log4j.jul.LogManager");
+
             // Load configuration file
             System.out.println("Loading config file");
             Configurations configs = new Configurations();
