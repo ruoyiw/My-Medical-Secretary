@@ -1,7 +1,7 @@
 package com.medsec.api;
 
-import com.medsec.ArgumentException;
-import com.medsec.AuthenticationException;
+import com.medsec.util.ArgumentException;
+import com.medsec.util.AuthenticationException;
 import com.medsec.filter.Secured;
 import com.medsec.entity.User;
 import com.medsec.util.Database;
@@ -86,11 +86,11 @@ public class AuthenticationAPI {
 
         // Reset token_valid_from
         Database db = new Database();
-        db.updateTokenValidFromDate(uid, Instant.now());
+        db.updateTokenValidFromDate(uid);
         return Response.ok(new DefaultRespondEntity("Success")).build();
     }
 
-    private User authenticate(User u) throws ArgumentException, AuthenticationException {
+    public static User authenticate(User u) throws ArgumentException, AuthenticationException {
         if (u.getEmail() == null || u.getPassword() == null)
             throw new ArgumentException();
 
