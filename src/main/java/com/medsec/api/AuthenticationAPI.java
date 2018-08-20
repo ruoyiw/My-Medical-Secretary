@@ -96,7 +96,7 @@ public class AuthenticationAPI {
 
         Database db = new Database();
         User user = db.getUserByEmail(u.getEmail());
-        if (! user.getPassword().equals( u.getPassword() )) {
+        if (user == null || !user.getPassword().equals(u.getPassword())) {
             throw new AuthenticationException();
         }
         return user;
