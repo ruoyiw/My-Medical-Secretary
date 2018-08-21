@@ -23,7 +23,7 @@ You can use this API to activate an user account and set up the password for the
 Name  | Type  | Description
 ----- | ----- | -----------
 `email`  | `string`    | The registered email of the user.
-`surename` | `string`   | The registered sure name of the user.
+`surname` | `string`   | The registered surname of the user.
 `firstname` | `string`  | The registered first name of the user.
 `dob`   | `LocalDate`  | The registered date of birth of the user, represented by a string with a format of `YYYY-MM-DD`. This date is timezone irrelevant.
 `password` |	`string`    | The password user wish to use. **Note:** Never send plaintext password through the internet.
