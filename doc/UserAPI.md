@@ -31,12 +31,15 @@ Name  | Type  | Description
 ### Example Request
 
 ```http
-POST http://localhost:8080/api/me/activate
+POST http://localhost:8080/api/user/activate
 Content-Type: application/json
 
 {
-  "email": "williamson@example.com",
-  "password": "123"
+	"email":"chad@example.com",
+	"surname":"Sharpe",
+	"firstname":"Chad",
+	"dob":"1979-08-03",
+	"password":"1"
 }
 ```
 
