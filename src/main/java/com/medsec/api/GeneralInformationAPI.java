@@ -12,7 +12,6 @@ import org.glassfish.jersey.server.JSONP;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -25,16 +24,13 @@ import java.util.List;
 public class GeneralInformationAPI {
 
     @GET
-    @Path("generalInformation/hostipals")
+    @Path("generalInformation/hospitals")
     @Secured(UserRole.PATIENT)
     @JSONP(queryParam = "callback")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listAllHospitals(
-            @QueryParam("since") String since,
-            @QueryParam("until") String until
-            ){
+    public Response listAllHospitals(){
         Database db=new Database();
-        List<Hospital> results=db.listAllHospitals();
+        List<Hospital> results=db.selectAllHospitals();
         return Response.ok(results).build();
     }
 
@@ -43,12 +39,9 @@ public class GeneralInformationAPI {
     @Secured(UserRole.PATIENT)
     @JSONP(queryParam = "callback")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listAllDoctors(
-            @QueryParam("since") String since,
-            @QueryParam("until") String until
-        ){
+    public Response listAllDoctors(){
         Database db=new Database();
-        List<Doctor> results=db.listAllDoctors();
+        List<Doctor> results=db.selectAllDoctors();
         return Response.ok(results).build();
     }
 
@@ -57,12 +50,9 @@ public class GeneralInformationAPI {
     @Secured(UserRole.PATIENT)
     @JSONP(queryParam = "callback")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listAllPathologies(
-            @QueryParam("since") String since,
-            @QueryParam("until") String until
-        ){
+    public Response listAllPathologies(){
         Database db=new Database();
-        List<Pathology> results=db.listAllPathologies();
+        List<Pathology> results=db.selectAllPathologies();
         return Response.ok(results).build();
     }
 
@@ -71,12 +61,9 @@ public class GeneralInformationAPI {
     @Secured(UserRole.PATIENT)
     @JSONP(queryParam = "callback")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listAllRadiologies(
-            @QueryParam("since") String since,
-            @QueryParam("until") String until
-        ){
+    public Response listAllRadiologies(){
         Database db=new Database();
-        List<Radiology> results=db.listAllRadiologies();
+        List<Radiology> results=db.selectAllRadiologies();
         return Response.ok(results).build();
     }
 }

@@ -160,7 +160,7 @@ public class Database {
     /*
     Hospital
      */
-    public List<Hospital> listAllHospitals(){
+    public List<Hospital> selectAllHospitals(){
 
         try{
             HospitalMapper mapper=session.getMapper(HospitalMapper.class);
@@ -174,7 +174,7 @@ public class Database {
     /*
     Doctor
      */
-    public List<Doctor> listAllDoctors(){
+    public List<Doctor> selectAllDoctors(){
 
         try{
             DoctorMapper mapper=session.getMapper(DoctorMapper.class);
@@ -188,7 +188,7 @@ public class Database {
     /*
     Pathology
      */
-    public List<Pathology> listAllPathologies(){
+    public List<Pathology> selectAllPathologies(){
         try{
             PathologyMapper mapper=session.getMapper(PathologyMapper.class);
             return mapper.selectAllPathologies();
@@ -201,7 +201,7 @@ public class Database {
     /*
     Radiology
      */
-    public List<Radiology> listAllRadiologies(){
+    public List<Radiology> selectAllRadiologies(){
         try{
             RadiologyMapper mapper=session.getMapper(RadiologyMapper.class);
             return mapper.selectAllRadiologies();
