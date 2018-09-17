@@ -45,4 +45,22 @@
           status= #{status}
         WHERE id= #{id}
     </update>
+
+    <insert id="insertAppointment" parameterType="com.medsec.entity.Appointment">
+        INSERT INTO appointment (id, uid, title, date_create, date_change, date, duration, detail, note, status)
+        VALUES (#{id}, #{uid}, #{title}, #{date_create}, #{date_change},#{date},#{duration},#{detail},#{note},#{status});
+    </insert>
+
+    <update id="updateAppointment" parameterType="com.medsec.entity.Appointment">
+        UPDATE appointment SET
+        title= #{title},
+        date_create= #{date_create},
+        date_change= #{date_change},
+        date= #{date},
+        duration= #{duration},
+        detail= #{detail},
+        note= #{note},
+        status= #{status}
+        WHERE id= #{id}
+    </update>
 </mapper>

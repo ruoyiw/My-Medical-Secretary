@@ -7,5 +7,7 @@ public interface UserMapper {
     User selectByEmail(String email);
     void updateToken(User user);
     void updatePassword(User user);
+    void insertUser(User user);
+    void updateUser(User user);
 
 }

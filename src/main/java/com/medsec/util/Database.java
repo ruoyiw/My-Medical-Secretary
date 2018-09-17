@@ -159,6 +159,46 @@ public class Database {
         }
     }
 
+    public void insertUser(User user) {
+        try {
+            UserMapper mapper = session.getMapper(UserMapper.class);
+            mapper.insertUser(user);
+            session.commit();
+        } finally {
+            if (!keepAlive) close();
+        }
+    }
+
+    public void updateUser(User user) {
+        try {
+            UserMapper mapper = session.getMapper(UserMapper.class);
+            mapper.updateUser(user);
+            session.commit();
+        } finally {
+            if (!keepAlive) close();
+        }
+    }
+
+    public void insertAppointment(Appointment appointment) {
+        try {
+            AppointmentMapper mapper = session.getMapper(AppointmentMapper.class);
+            mapper.insertAppointment(appointment);
+            session.commit();
+        } finally {
+            if (!keepAlive) close();
+        }
+    }
+
+    public void updateAppointment(Appointment appointment) {
+        try {
+            AppointmentMapper mapper = session.getMapper(AppointmentMapper.class);
+            mapper.updateAppointment(appointment);
+            session.commit();
+        } finally {
+            if (!keepAlive) close();
+        }
+    }
+
     @Override
     protected void finalize() {
         close();

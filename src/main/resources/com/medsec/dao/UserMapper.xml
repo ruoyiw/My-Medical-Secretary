@@ -27,5 +27,20 @@
           token_valid_from= #{token_valid_from}
         WHERE id= #{id}
     </update>
+    <insert id="insertUser" parameterType="com.medsec.entity.User">
+        INSERT INTO user (id, surname, firstname, dob, email, street, suburb, state, role)
+        VALUES (#{id}, #{surname}, #{firstname}, #{dob}, #{email}, #{street}, #{suburb}, #{state}, #{role});
+    </insert>
+    <update id="updateUser" parameterType="com.medsec.entity.User">
+        UPDATE user SET
+          surname= #{surname},
+          firstname= #{firstname},
+          dob= #{dob},
+          email= #{email},
+          street= #{street},
+          suburb= #{suburb},
+          state= #{state}
+        WHERE id= #{id}
+    </update>
 
 </mapper>
