@@ -255,36 +255,6 @@ public class AppointmentAPI {
             return Response.ok(new DefaultRespondEntity()).build();
         }
 
-        // TODO: Push notification API of new appointment
-        @POST
-        @Path("appointments/notification")
-        @Secured(UserRole.ADMIN)
-        @Produces(MediaType.APPLICATION_JSON)
-        public String notifyNewAppintment() {
-
-            try{
-                //TODO: Token should be received from client app
-                String recipientToken = "fDTpUpdHDlc:APA91bEPY1ZWw98CE-QlfiQLNJzECapipKlFeqKvEmGY4GQIL8ff12lAw5H0pEyjo_JsYF6XA_xHgwRA6DXjA2jV7nOXp0Uy0DWHKfJEyP7ieRd4hTSiFl3FmqGNraT-QWa-81jxiGow";
-                JsonObject notificationObject = new JsonObject();
-                notificationObject.addProperty("title", "Medical Secretary");
-                notificationObject.addProperty("body", "There is a new appointment.");
-
-                JsonObject dataObject = new JsonObject();
-                dataObject.addProperty("time", "30/09/2018 9:30AM");
-                dataObject.addProperty("location", "Hospital A");
-
-                FCMHelper fcm = FCMHelper.getInstance();
-                String response = fcm.sendNotifictaionAndData(FCMHelper.TYPE_TO, recipientToken, notificationObject, dataObject);
-
-                return response;
-
-            } catch (IOException e) {
-
-            }
-
-            return null;
-
-        }
 
     }
 
