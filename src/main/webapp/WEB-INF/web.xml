@@ -90,4 +90,15 @@
         <filter-name>CORS</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <security-constraint>
+    <web-resource-collection>
+    <web-resource-name>SSL</web-resource-name>
+    <url-pattern>/api/*</url-pattern>
+    </web-resource-collection>
+    <user-data-constraint>
+    <description>SSL required</description>
+        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
+    </security-constraint>
 </web-app>
