@@ -9,6 +9,7 @@ public class SocketServerListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         System.out.println("Starting up!");
+        /** initialize the server socket port */
         try {
             SocketServer.init(PORT);
         } catch (Exception e) {

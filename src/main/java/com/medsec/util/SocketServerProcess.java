@@ -48,6 +48,7 @@ public class SocketServerProcess implements Runnable {
     }
 
 
+    /** receive the data and do relevant data process */
     private boolean processData(String data){
         JSONObject jsonObj = parse(data);
         GScommands command = GScommands.valueOf((String) jsonObj.get("command"));
@@ -69,6 +70,7 @@ public class SocketServerProcess implements Runnable {
         return true;
     }
 
+    /** parse string to json object */
     private JSONObject parse(String jsonString) {
         try {
             JSONObject jsonObj = (JSONObject) new JSONParser().parse(jsonString);
@@ -79,6 +81,7 @@ public class SocketServerProcess implements Runnable {
         }
     }
 
+    /** process user data, insert new user or update existed user */
     private boolean userHandler(JSONObject user){
         Database db = new Database();
         String id = (String) user.get("Id");
@@ -94,6 +97,7 @@ public class SocketServerProcess implements Runnable {
         return false;
     }
 
+    /** process appointment data, insert new appointment or update existed appointment */
     private boolean apptHandler(JSONObject appt){
         Database db = new Database();
         String id = (String) appt.get("Id");
@@ -109,6 +113,8 @@ public class SocketServerProcess implements Runnable {
         return false;
     }
 
+
+    /** create User instance from json object */
     private User processUser(JSONObject user){
         String id = (String) user.get("Id");
         String surname = (String) user.get("Surname");
@@ -123,12 +129,14 @@ public class SocketServerProcess implements Runnable {
         return patient;
     }
 
+    /** check if the patient is already in the database */
     public boolean isPatientExist(String id){
         Database db = new Database();
         User patient = db.getUserById(id);
         return patient != null;
     }
 
+    /** create appointment instance from json object */
     public Appointment processAppt(JSONObject appt){
         String id = (String) appt.get("Id");
         String uid = (String) appt.get("PT_Id_Fk");
@@ -147,12 +155,14 @@ public class SocketServerProcess implements Runnable {
         return appointment;
     }
 
+    /** check if the appointment is already in the database */
     public boolean isApptExist(String id){
         Database db = new Database();
         Appointment appt = db.getAppointment(id);
         return appt != null;
     }
 
+    /* get the correct start time of an appointment */
     public Instant startDateConvert(Instant startDate, long startTime) {
         startDate = startDate.minus(Duration.ofHours(10));
         startDate = startDate.plusMillis(startTime);
@@ -160,6 +170,7 @@ public class SocketServerProcess implements Runnable {
 
     }
 
+    /** get the correct update time from String */
     public Instant updateTimeConvert(String lastChnageDate) {
         String year = lastChnageDate.substring(0, 4);
         String month = lastChnageDate.substring(4, 6);
