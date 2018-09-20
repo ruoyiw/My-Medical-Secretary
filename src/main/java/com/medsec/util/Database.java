@@ -1,9 +1,7 @@
 package com.medsec.util;
 
-import com.medsec.dao.AppointmentMapper;
-import com.medsec.dao.UserMapper;
-import com.medsec.entity.Appointment;
-import com.medsec.entity.User;
+import com.medsec.dao.*;
+import com.medsec.entity.*;
 import org.apache.ibatis.session.SqlSession;
 
 import javax.annotation.Nullable;
@@ -156,6 +154,60 @@ public class Database {
 
         } finally {
             if (!keepAlive) close();
+        }
+    }
+
+    /*
+    Hospital
+     */
+    public List<Hospital> selectAllHospitals(){
+
+        try{
+            HospitalMapper mapper=session.getMapper(HospitalMapper.class);
+            return mapper.selectAllHospitals();
+
+        } finally {
+            if (!keepAlive) close();
+        }
+    }
+
+    /*
+    Doctor
+     */
+    public List<Doctor> selectAllDoctors(){
+
+        try{
+            DoctorMapper mapper=session.getMapper(DoctorMapper.class);
+            return mapper.selectAllDoctors();
+
+        } finally {
+            if(!keepAlive) close();
+        }
+    }
+
+    /*
+    Pathology
+     */
+    public List<Pathology> selectAllPathologies(){
+        try{
+            PathologyMapper mapper=session.getMapper(PathologyMapper.class);
+            return mapper.selectAllPathologies();
+
+        } finally {
+            if(!keepAlive) close();
+        }
+    }
+
+    /*
+    Radiology
+     */
+    public List<Radiology> selectAllRadiologies(){
+        try{
+            RadiologyMapper mapper=session.getMapper(RadiologyMapper.class);
+            return mapper.selectAllRadiologies();
+
+        } finally {
+            if(!keepAlive) close();
         }
     }
 

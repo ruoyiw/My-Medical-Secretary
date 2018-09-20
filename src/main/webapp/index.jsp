@@ -9,6 +9,7 @@
     </p>
 
     <hr>
-    <small>Copyright © Medical Secretary Development Team, 2018.</small>
+    <small>Copyright &copy; Medical Secretary Development Team, 2018.</small>
+    <small id="version">Manually built and deployed.</small>
 </body>
 </html>
