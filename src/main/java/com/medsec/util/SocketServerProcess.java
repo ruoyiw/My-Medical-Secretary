@@ -36,8 +36,8 @@ public class SocketServerProcess implements Runnable {
             String msg;
             BufferedReader reader = new BufferedReader(new InputStreamReader(connectedSocket.getInputStream()));
             while(!flag && (msg = reader.readLine()) != null) {
-                String data = SymmetricEncrypt.getInstance().decrypt(msg);
-                flag = processData(data);
+//                String data = SymmetricEncrypt.getInstance().decrypt(msg);
+                flag = processData(msg);
             }
             connectedSocket.close();
            LOG.info("Client disconnected, data transfer complete");
