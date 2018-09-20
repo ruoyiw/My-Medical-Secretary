@@ -33,6 +33,7 @@ public class AuthenticationAPI {
             // Issue a token for the user
             user = issueToken(user);
 
+
             // Return the token on the response, omit some sensitive information
             User respondUser = user
                     .token_valid_from(null)
