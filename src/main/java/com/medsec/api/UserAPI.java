@@ -109,7 +109,7 @@ public class UserAPI {
         if (user == null
                 || ! user.getSurname().equalsIgnoreCase(u.getSurname())
                 || ! user.getFirstname().equalsIgnoreCase(u.getFirstname())
-                || ! user.getDob().isEqual(u.getDob())
+                || ! user.getDob().equals(u.getDob())
         ) {
             throw new AuthenticationException(AuthenticationException.REGISTRATION_NOT_MATCH);
         }
