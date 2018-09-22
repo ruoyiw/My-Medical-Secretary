@@ -11,6 +11,9 @@ public interface NotificationTokenMapper {
             @Param("uid") String uid
     );
 
+    NotificationToken getUserByToken(@Param("fcm_token") String fcm_token);
     void insertUserToken(NotificationToken token);
+
+    void deleteUserToken(NotificationToken token);
 
 }

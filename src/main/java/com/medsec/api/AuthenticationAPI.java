@@ -68,6 +68,41 @@ public class AuthenticationAPI {
     }
 
     @POST
+    @Path("logout")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deleteUserFcmToken(User requestUser) {
+        try {
+            String token = requestUser.getToken();
+            if (token == null)
+                throw new ArgumentException();
+
+            // Delete user id and fcm token from database
+            Database db = new Database(true);
+            NotificationToken userToken = db.getUserFcmToken(token);
+            if (userToken == null)
+                return Response.status(Response.Status.NOT_FOUND).entity(null).build();
+
+//            if (!requestUser.getId().equals(userToken.getUid()))
+//                return Response.status(Response.Status.FORBIDDEN).entity(null).build();
+
+            db.deleteUserFcmToken(token);
+
+            db.close();
+
+            return Response.ok(new DefaultRespondEntity()).build();
+
+        } catch (ArgumentException e) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(new DefaultRespondEntity(e.getMessage()))
+                    .build();
+        }
+
+
+    }
+
+    @POST
     @Secured
     @Path("renewToken")
     @Produces(MediaType.APPLICATION_JSON)

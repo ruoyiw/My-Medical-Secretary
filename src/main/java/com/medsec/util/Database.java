@@ -228,6 +228,32 @@ public class Database {
         }
     }
 
+    public void deleteUserFcmToken(String fcmToken) {
+
+        try {
+
+            NotificationTokenMapper mapper = session.getMapper(NotificationTokenMapper.class);
+            NotificationToken token = new NotificationToken().fcm_token(fcmToken);
+            mapper.deleteUserToken(token);
+            session.commit();
+
+        } finally {
+            if (!keepAlive) close();
+        }
+    }
+
+    public NotificationToken getUserFcmToken(String fcm_token) {
+
+        try {
+
+            NotificationTokenMapper mapper = session.getMapper(NotificationTokenMapper.class);
+            return mapper.getUserByToken(fcm_token);
+
+        } finally {
+            if (!keepAlive) close();
+        }
+    }
+
     @Override
     protected void finalize() {
         close();
