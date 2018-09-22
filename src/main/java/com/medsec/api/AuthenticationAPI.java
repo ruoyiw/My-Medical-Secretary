@@ -83,8 +83,6 @@ public class AuthenticationAPI {
             if (userToken == null)
                 return Response.status(Response.Status.NOT_FOUND).entity(null).build();
 
-//            if (!requestUser.getId().equals(userToken.getUid()))
-//                return Response.status(Response.Status.FORBIDDEN).entity(null).build();
 
             db.deleteUserFcmToken(token);
 

@@ -21,7 +21,7 @@ Use this API to authenticate your self and get a token for future requests.
 
 **Note:** The user attempt to log in should have activated (registered) their account.
 
-**Note:** This API does not require a token.
+**Note:** The request token is the fcm token that is retrieved from Firebase by user. The user id and fcm token will stored into the database when the user has logged in.
 
     POST /login
 
@@ -31,6 +31,7 @@ Name  | Type  | Description
 ----- | ----- | -----------
 `email`  | `string`    | The email of the user.
 `password` |	`string`    | The **hashed** password of the user. **Note:** Never send plaintext password through the internet.
+`token`  |  `string`  |  The fcm token of the user
 
 ### Example Request
 
@@ -40,7 +41,8 @@ Content-Type: application/json
 
 {
   "email": "williamson@example.com",
-  "password": "123"
+  "password": "123",
+  "token": "fDTpUpdHDlc:APA91bHM7XVkG4Ad83EWwNqMBm437kWtKRvxeGYlS1A5CNdPtJdTcXP-MBXdkvQAjhnuZeOtcjSatMxn-p-qCXBRaJN2MhCEIMYjf2kSHVBA2gICIswJl_TCNweVBHlCybdXkQ_53bzY"
 }
 ```
 
@@ -68,6 +70,35 @@ Content-Type: application/json
 
 As tokens are not tracked by the server, there is no need for a client to logout by request. You can simply destroy your locally stored token to perform logout. Meanwhile other tokens (i.e. a second device) are still valid. If you want to revoke all your valid token issued so far, refer to [Revoke all existing tokens](#revoke-all-existing-tokens)
 
+When user has logged out, this api should be invoked to delete the record of user id and fcm token from the database.
+
+    POST /logout
+
+### Input
+
+Name  | Type  | Description
+----- | ----- | -----------
+`token`  | `string`    | The fcm token of the user.
+
+### Example Request
+
+```http
+POST http://localhost:8080/api/logout
+Content-Type: application/json
+
+{
+  "token": "fDTpUpdHDlc:APA91bHM7XVkG4Ad83EWwNqMBm437kWtKRvxeGYlS1A5CNdPtJdTcXP-MBXdkvQAjhnuZeOtcjSatMxn-p-qCXBRaJN2MhCEIMYjf2kSHVBA2gICIswJl_TCNweVBHlCybdXkQ_53bzY"
+}
+```
+### Response
+
+    Status: 200 OK
+
+```json
+{
+  "message": "Success"
+}
+```
 ## Renew a token
 
 You can use this api to request a new token with a fresh expire date with your existing valid token.
