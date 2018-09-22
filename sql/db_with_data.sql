@@ -231,7 +231,7 @@ DROP TABLE IF EXISTS `NotificationToken`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `NotificationToken` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) NOT NULL,
   `fcm_token` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),

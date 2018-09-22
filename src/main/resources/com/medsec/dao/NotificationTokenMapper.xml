@@ -7,5 +7,8 @@
       select fcm_token from NotificationToken where uid = #{uid}
     </select>
 
+    <insert id="insertUserToken" parameterType="com.medsec.entity.NotificationToken">
+      insert into NotificationToken (id, uid, fcm_token) values (default, #{uid}, #{fcm_token})
+    </insert>
 
 </mapper>

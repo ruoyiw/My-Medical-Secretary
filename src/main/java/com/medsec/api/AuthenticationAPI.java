@@ -1,5 +1,6 @@
 package com.medsec.api;
 
+import com.medsec.entity.NotificationToken;
 import com.medsec.util.ArgumentException;
 import com.medsec.util.AuthenticationException;
 import com.medsec.filter.Secured;
@@ -23,6 +24,7 @@ public class AuthenticationAPI {
     @Path("login")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+
     public Response authenticateUser(User requestUser) {
 
         try {
@@ -30,9 +32,19 @@ public class AuthenticationAPI {
             // Authenticate the user using the credentials provided
             User user = authenticate(requestUser);
 
+            // Get user id and fcm token
+            String uid = user.getId();
+            String token = requestUser.getToken();
+
+            if (token == null)
+                throw new ArgumentException();
+
+            // Insert user id and fcm token into database
+            Database db = new Database();
+            db.insertUserFcmToken(uid, token);
+
             // Issue a token for the user
             user = issueToken(user);
-
 
             // Return the token on the response, omit some sensitive information
             User respondUser = user
@@ -106,4 +118,6 @@ public class AuthenticationAPI {
     private User issueToken(User u) {
         return Token.createTokenForUser(u);
     }
+
+
 }

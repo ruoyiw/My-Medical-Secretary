@@ -28,4 +28,15 @@ public class NotificationToken {
     public void setFcmToken(String fcm_token) {
         this.fcm_token = fcm_token;
     }
+
+    public NotificationToken uid(final String uid) {
+        setUid(uid);
+        return this;
+    }
+
+    public NotificationToken fcm_token(final String fcm_token) {
+        setFcmToken(fcm_token);
+        return this;
+    }
+
 }

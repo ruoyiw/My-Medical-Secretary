@@ -211,6 +211,23 @@ public class Database {
         }
     }
 
+    /*
+    Notification token
+     */
+    public void insertUserFcmToken(String uid, String fcmToken) {
+
+        try {
+
+            NotificationTokenMapper mapper = session.getMapper(NotificationTokenMapper.class);
+            NotificationToken token = new NotificationToken().uid(uid).fcm_token(fcmToken);
+            mapper.insertUserToken(token);
+            session.commit();
+
+        } finally {
+            if (!keepAlive) close();
+        }
+    }
+
     @Override
     protected void finalize() {
         close();
