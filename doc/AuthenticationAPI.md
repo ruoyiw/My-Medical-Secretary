@@ -78,7 +78,8 @@ When user has logged out, this api should be invoked to delete the record of use
 
 Name  | Type  | Description
 ----- | ----- | -----------
-`token`  | `string`    | The fcm token of the user.
+`id`  |  `string`  | The user ID
+`token`  | `string`    | The fcm token of the user
 
 ### Example Request
 
@@ -86,7 +87,8 @@ Name  | Type  | Description
 POST http://localhost:8080/api/logout
 Content-Type: application/json
 
-{
+{  
+  "id": "1",
   "token": "fDTpUpdHDlc:APA91bHM7XVkG4Ad83EWwNqMBm437kWtKRvxeGYlS1A5CNdPtJdTcXP-MBXdkvQAjhnuZeOtcjSatMxn-p-qCXBRaJN2MhCEIMYjf2kSHVBA2gICIswJl_TCNweVBHlCybdXkQ_53bzY"
 }
 ```

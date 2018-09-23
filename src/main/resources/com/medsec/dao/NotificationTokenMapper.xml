@@ -16,7 +16,7 @@
     </insert>
 
     <delete id="deleteUserToken" parameterType="com.medsec.entity.NotificationToken">
-      delete from NotificationToken where fcm_token= #{fcm_token}
+      delete from NotificationToken where uid = #{uid} and fcm_token= #{fcm_token}
     </delete>
 
 </mapper>

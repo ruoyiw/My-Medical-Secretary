@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import javax.annotation.Nullable;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -228,14 +229,27 @@ public class Database {
         }
     }
 
-    public void deleteUserFcmToken(String fcmToken) {
+    public void deleteUserFcmToken(String uid, String fcmToken) {
+
 
         try {
 
             NotificationTokenMapper mapper = session.getMapper(NotificationTokenMapper.class);
-            NotificationToken token = new NotificationToken().fcm_token(fcmToken);
+            NotificationToken token = new NotificationToken().uid(uid).fcm_token(fcmToken);
             mapper.deleteUserToken(token);
             session.commit();
+
+        } finally {
+            if (!keepAlive) close();
+        }
+    }
+
+    public ArrayList<String> getFcmTokenByUid(String uid) {
+
+        try {
+
+            NotificationTokenMapper mapper = session.getMapper(NotificationTokenMapper.class);
+            return mapper.getTokensByUserId(uid);
 
         } finally {
             if (!keepAlive) close();

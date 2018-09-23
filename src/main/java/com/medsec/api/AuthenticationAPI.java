@@ -73,18 +73,20 @@ public class AuthenticationAPI {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response deleteUserFcmToken(User requestUser) {
         try {
-            String token = requestUser.getToken();
-            if (token == null)
+            String requestUid = requestUser.getId();
+            String requestFcmToken = requestUser.getToken();
+            if (requestUid == null || requestFcmToken == null)
                 throw new ArgumentException();
 
             // Delete user id and fcm token from database
             Database db = new Database(true);
-            NotificationToken userToken = db.getUserFcmToken(token);
+            NotificationToken userToken = db.getUserFcmToken(requestFcmToken);
             if (userToken == null)
                 return Response.status(Response.Status.NOT_FOUND).entity(null).build();
+            if (!requestUid.equals(userToken.getUid()))
+                return Response.status(Response.Status.FORBIDDEN).entity(null).build();
 
-
-            db.deleteUserFcmToken(token);
+            db.deleteUserFcmToken(requestUid, requestFcmToken);
 
             db.close();
 
@@ -96,7 +98,6 @@ public class AuthenticationAPI {
                     .entity(new DefaultRespondEntity(e.getMessage()))
                     .build();
         }
-
 
     }
 
