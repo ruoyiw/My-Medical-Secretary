@@ -9,9 +9,10 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.Socket;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.*;
 
 
@@ -34,16 +35,19 @@ public class SocketServerProcess implements Runnable {
     public void run() {
         try {
             String msg;
-            BufferedReader reader = new BufferedReader(new InputStreamReader(connectedSocket.getInputStream()));
-            while(!flag && (msg = reader.readLine()) != null) {
+            InputStream in = connectedSocket.getInputStream();
+            DataInputStream dataInputStream = new DataInputStream(in);
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(connectedSocket.getInputStream()));
+            while(!flag && (msg = dataInputStream.readUTF()) != null) {
 //                String data = SymmetricEncrypt.getInstance().decrypt(msg);
                 flag = processData(msg);
             }
             connectedSocket.close();
            LOG.info("Client disconnected, data transfer complete");
-        } catch (Exception e) {
-            e.printStackTrace();
-
+        } catch (EOFException e) {
+            LOG.info("Client disconnected, data transfer complete");
+        } catch (IOException e) {
+            LOG.error("socket is close by IO exception ");
         }
     }
 
@@ -63,6 +67,9 @@ public class SocketServerProcess implements Runnable {
             case PATIENT:
                 System.out.println(jsonObj.get("doc"));
                 return userHandler((JSONObject) jsonObj.get("doc"));
+            case FILE:
+                System.out.println(jsonObj.get("doc"));
+                return fileHandler((JSONObject) jsonObj.get("doc"));
             case DISCONNECTION:
                 System.out.println("disconnected");
                 return false;
@@ -182,5 +189,38 @@ public class SocketServerProcess implements Runnable {
                 + ".00Z";
         Instant instant = Instant.parse(updateTime);
         return instant;
+    }
+
+    public boolean fileHandler(JSONObject file) {
+        int bytesRead = 0;
+        InputStream in = null;
+        String filePath = "D:\\test\\" + file.get("PT_Id_Fk") + "\\" + file.get("FileName");
+
+        try {
+            in = connectedSocket.getInputStream();
+            File newFile = new File(filePath);
+            if (!newFile.exists()){
+                newFile.getParentFile().mkdir();
+                newFile.createNewFile();
+            }
+            DataInputStream clientData = new DataInputStream(in);
+            OutputStream output = new FileOutputStream(newFile);
+            long size = (long) file.get("FileSize");
+            byte[] buffer = new byte[1024];
+            while (size > 0 && (bytesRead = clientData.read(buffer, 0, (int)Math.min(buffer.length, size))) != -1) {
+
+                output.write(buffer, 0, bytesRead);
+                size -= bytesRead;
+            }
+            output.flush();
+            output.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        com.medsec.entity.File patientFile = new com.medsec.entity.File().id((String) file.get("Id"))
+                .title((String) file.get("FileName")).link(filePath).pid((String) file.get("PT_Id_Fk"));
+        Database db = new Database();
+        db.insertFile(patientFile);
+        return false;
     }
 }

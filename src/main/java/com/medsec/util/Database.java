@@ -251,6 +251,16 @@ public class Database {
         }
     }
 
+    public void insertFile(File file) {
+        try {
+            FileMapper mapper = session.getMapper(FileMapper.class);
+            mapper.insertFile(file);
+            session.commit();
+        } finally {
+            if (!keepAlive) close();
+        }
+    }
+
     @Override
     protected void finalize() {
         close();
