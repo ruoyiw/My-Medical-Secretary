@@ -103,6 +103,14 @@ public class GeneralInformationAPI {
                 throw new ArgumentException();
             }
             Database db=new Database();
+            Hospital hospital=db.selectOneHospital(requestHospital.getId());
+            if(hospital!=null){
+                db.close();
+                return Response
+                        .status(Response.Status.BAD_REQUEST)
+                        .entity(new DefaultRespondEntity("this hospital record already existed in db"))
+                        .build();
+            }
             db.addHospital(requestHospital);
             db.close();
             return Response.ok(new DefaultRespondEntity()).build();
@@ -196,6 +204,14 @@ public class GeneralInformationAPI {
                 throw new ArgumentException();
             }
             Database db=new Database();
+            Doctor doctor=db.selectOneDoctor(requestDoctor.getId());
+            if(doctor!=null){
+                db.close();
+                return Response
+                        .status(Response.Status.BAD_REQUEST)
+                        .entity(new DefaultRespondEntity("this doctor record already existed in db"))
+                        .build();
+            }
             db.addDoctor(requestDoctor);
             db.close();
             return Response.ok(new DefaultRespondEntity()).build();
@@ -291,6 +307,14 @@ public class GeneralInformationAPI {
                 throw new ArgumentException();
             }
             Database db=new Database();
+            Pathology pathology=db.selectOnePathology(requestPathology.getId());
+            if(pathology!=null){
+                db.close();
+                return Response
+                        .status(Response.Status.BAD_REQUEST)
+                        .entity(new DefaultRespondEntity("this pathology record already existed in db"))
+                        .build();
+            }
             db.addPathology(requestPathology);
             db.close();
             return Response.ok(new DefaultRespondEntity()).build();
@@ -386,6 +410,14 @@ public class GeneralInformationAPI {
                 throw new ArgumentException();
             }
             Database db=new Database();
+            Radiology radiology=db.selectOneRadiology(requestRadiology.getId());
+            if(radiology!=null){
+                db.close();
+                return Response
+                        .status(Response.Status.BAD_REQUEST)
+                        .entity(new DefaultRespondEntity("this radiology record already existed in db"))
+                        .build();
+            }
             db.addRadiology(requestRadiology);
             db.close();
             return Response.ok(new DefaultRespondEntity()).build();
