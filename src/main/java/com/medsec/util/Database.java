@@ -2,9 +2,11 @@ package com.medsec.util;
 
 import com.medsec.dao.*;
 import com.medsec.entity.*;
+import javafx.scene.control.RadioMenuItem;
 import org.apache.ibatis.session.SqlSession;
 
 import javax.annotation.Nullable;
+import java.nio.file.Path;
 import java.time.Instant;
 import java.util.List;
 
@@ -171,6 +173,32 @@ public class Database {
         }
     }
 
+    public Hospital selectOneHospital(String hospitalID){
+        HospitalMapper mapper=session.getMapper(HospitalMapper.class);
+        return mapper.selectOneHospital(hospitalID);
+    }
+
+    public void deleteHospital(String hospitalID){
+        HospitalMapper mapper=session.getMapper(HospitalMapper.class);
+        mapper.deleteHospital(hospitalID);
+        session.commit();
+
+    }
+
+    public void updateHospital(Hospital hospital){
+        HospitalMapper mapper=session.getMapper(HospitalMapper.class);
+        mapper.updateHospital(hospital);
+        session.commit();
+
+    }
+
+    public void addHospital(Hospital hospital){
+        HospitalMapper mapper=session.getMapper(HospitalMapper.class);
+        mapper.addHospital(hospital);
+        session.commit();
+
+    }
+
     /*
     Doctor
      */
@@ -183,6 +211,29 @@ public class Database {
         } finally {
             if(!keepAlive) close();
         }
+    }
+
+    public Doctor selectOneDoctor(String doctorID){
+        DoctorMapper mapper=session.getMapper(DoctorMapper.class);
+        return mapper.selectOneDoctor(doctorID);
+    }
+
+    public void deleteDoctor(String doctorID){
+        DoctorMapper mapper=session.getMapper(DoctorMapper.class);
+        mapper.deleteDoctor(doctorID);
+        session.commit();
+    }
+
+    public void updateDoctor(Doctor doctor){
+        DoctorMapper mapper=session.getMapper(DoctorMapper.class);
+        mapper.updateDoctor(doctor);
+        session.commit();
+    }
+
+    public void addDoctor(Doctor doctor){
+        DoctorMapper mapper=session.getMapper(DoctorMapper.class);
+        mapper.addDoctor(doctor);
+        session.commit();
     }
 
     /*

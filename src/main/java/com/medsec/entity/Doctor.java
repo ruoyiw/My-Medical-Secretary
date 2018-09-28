@@ -1,7 +1,7 @@
 package com.medsec.entity;
 
 public class Doctor {
-    private int id;
+    private String id;
     private String name;
     private String address;
     private String contact;
@@ -9,11 +9,11 @@ public class Doctor {
     private String website;
     private String expertise;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
