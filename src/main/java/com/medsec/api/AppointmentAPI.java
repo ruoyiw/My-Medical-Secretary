@@ -1,5 +1,6 @@
 package com.medsec.api;
 
+import com.google.gson.JsonObject;
 import com.medsec.entity.Appointment;
 import com.medsec.entity.User;
 import com.medsec.filter.Secured;
@@ -11,6 +12,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -27,8 +29,8 @@ public class AppointmentAPI {
     @Produces(MediaType.APPLICATION_JSON)
     public Response listUserAppointments(
             @PathParam("uid") String uid,
-            @QueryParam("since")String since,
-            @QueryParam("until")  String until,
+            @QueryParam("since") String since,
+            @QueryParam("until") String until,
             @QueryParam("is_confirmed") Boolean is_confirmed) {
 
         List<Appointment> results = retrieveUserAppointments(uid, since, until, is_confirmed);
@@ -44,8 +46,8 @@ public class AppointmentAPI {
     @Produces(MediaType.APPLICATION_JSON)
     public Response listMyAppointments(
             @Context SecurityContext sc,
-            @QueryParam("since")String since,
-            @QueryParam("until")  String until,
+            @QueryParam("since") String since,
+            @QueryParam("until") String until,
             @QueryParam("is_confirmed") Boolean is_confirmed) {
 
         String uid = sc.getUserPrincipal().getName();
@@ -64,7 +66,7 @@ public class AppointmentAPI {
             @Context SecurityContext sc,
             @PathParam("appointment_id") String id) {
 
-        User requestUser = (User)sc.getUserPrincipal();
+        User requestUser = (User) sc.getUserPrincipal();
         UserRole requestRole = requestUser.getRole();
         String requestUid = requestUser.getId();
 
@@ -78,7 +80,7 @@ public class AppointmentAPI {
             return Response.status(Response.Status.FORBIDDEN).entity(null).build();
 
         return Response.ok(appointment).build();
-    }
+   }
 
     @POST
     @Path("appointments/{appointment_id}/confirm")
@@ -111,7 +113,6 @@ public class AppointmentAPI {
 
     @POST
     @Path("appointments/{appointment_id}/status")
-    @Secured(UserRole.ADMIN)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateAppointmentStatus(
             @PathParam("appointment_id") String id,
@@ -228,6 +229,7 @@ public class AppointmentAPI {
             }
         }
 
+
         @DELETE
         @Secured
         public Response deleteUserNote(@Context SecurityContext sc) {
@@ -252,6 +254,7 @@ public class AppointmentAPI {
 
             return Response.ok(new DefaultRespondEntity()).build();
         }
+
 
     }
 

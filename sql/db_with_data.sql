@@ -222,6 +222,26 @@ LOCK TABLES `User` WRITE;
 INSERT INTO `User` VALUES ('123',1,'Williamson','Alex','Mileston','1986-08-07','williamson@example.com','97 Masthead Drive','ROCKHAMPTON','QLD',NULL,NULL,'2018-08-05 04:15:10','PATIENT'),('1230',2,'Maggard','Arnold','Logan','1968-02-10','arnold@example.com','42 Edgewater Close','HUSKISSON','NSW',NULL,NULL,'2018-08-09 13:09:29','ADMIN'),(NULL,3,'Sharpe','Chad',NULL,'1979-08-03','chad@example.com','41 Ross Street',NULL,NULL,NULL,NULL,'2018-08-04 14:05:19','PATIENT'),(NULL,4,'Haggerty','Susan',NULL,'1994-01-08','susan@example.com',NULL,NULL,NULL,NULL,NULL,'2018-08-04 14:05:19','PATIENT');
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `UserNotificationToken`
+--
+
+DROP TABLE IF EXISTS `NotificationToken`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `NotificationToken` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL,
+  `fcm_token` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_NotificationToken_User_idx` (`uid`),
+  CONSTRAINT `fk_NotificationToken_User` FOREIGN KEY (`uid`) REFERENCES `User` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

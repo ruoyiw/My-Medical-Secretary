@@ -2,12 +2,11 @@ package com.medsec.util;
 
 import com.medsec.dao.*;
 import com.medsec.entity.*;
-import javafx.scene.control.RadioMenuItem;
 import org.apache.ibatis.session.SqlSession;
 
 import javax.annotation.Nullable;
-import java.nio.file.Path;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -306,6 +305,64 @@ public class Database {
         RadiologyMapper mapper=session.getMapper(RadiologyMapper.class);
         mapper.updateRadiology(radiology);
         session.commit();
+    }
+
+
+
+    /*
+    Notification token
+     */
+    public void insertUserFcmToken(String uid, String fcmToken) {
+
+        try {
+
+            NotificationTokenMapper mapper = session.getMapper(NotificationTokenMapper.class);
+            NotificationToken token = new NotificationToken().uid(uid).fcm_token(fcmToken);
+            mapper.insertUserToken(token);
+            session.commit();
+
+        } finally {
+            if (!keepAlive) close();
+        }
+    }
+
+    public void deleteUserFcmToken(String uid, String fcmToken) {
+
+
+        try {
+
+            NotificationTokenMapper mapper = session.getMapper(NotificationTokenMapper.class);
+            NotificationToken token = new NotificationToken().uid(uid).fcm_token(fcmToken);
+            mapper.deleteUserToken(token);
+            session.commit();
+
+        } finally {
+            if (!keepAlive) close();
+        }
+    }
+
+    public ArrayList<String> getFcmTokenByUid(String uid) {
+
+        try {
+
+            NotificationTokenMapper mapper = session.getMapper(NotificationTokenMapper.class);
+            return mapper.getTokensByUserId(uid);
+
+        } finally {
+            if (!keepAlive) close();
+        }
+    }
+
+    public NotificationToken getUserFcmToken(String fcm_token) {
+
+        try {
+
+            NotificationTokenMapper mapper = session.getMapper(NotificationTokenMapper.class);
+            return mapper.getUserByToken(fcm_token);
+
+        } finally {
+            if (!keepAlive) close();
+        }
     }
 
 
