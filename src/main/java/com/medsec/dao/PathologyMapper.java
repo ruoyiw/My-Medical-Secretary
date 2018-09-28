@@ -6,4 +6,9 @@ import java.util.List;
 
 public interface PathologyMapper {
     List<Pathology> selectAllPathologies();
+    Pathology selectOnePathology(String pathologyID);
+    void addPathology(Pathology pathology);
+    void deletePathology(String pathologyID);
+    void updatePathology(Pathology pathology);
+
 }

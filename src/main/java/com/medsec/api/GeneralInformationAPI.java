@@ -212,7 +212,7 @@ public class GeneralInformationAPI {
 
     @GET
     @Path("generalInformation/pathologies")
-    @Secured(UserRole.PATIENT)
+    @Secured({UserRole.PATIENT,UserRole.ADMIN})
     @JSONP(queryParam = "callback")
     @Produces(MediaType.APPLICATION_JSON)
     public Response listAllPathologies(){
@@ -222,6 +222,84 @@ public class GeneralInformationAPI {
     }
 
 
+    @GET
+    @Path("generalInformation/onePathology/{pathologyID}")
+    @Secured({UserRole.ADMIN,UserRole.PATIENT})
+    @JSONP(queryParam = "callback")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listOnePathology(
+            @PathParam("pathologyID") String pathologyID){
+        Database db=new Database();
+        Pathology pathology=db.selectOnePathology(pathologyID);
+        db.close();
+        return Response.ok(pathology).build();
+    }
+
+    @DELETE
+    @Path("generalInformation/deletePathology/{pathologyID}")
+    @Secured(UserRole.ADMIN)
+    @JSONP(queryParam = "callback")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deletePathology(
+            @PathParam("pathologyID") String pathologyID){
+        Database db=new Database();
+        Pathology pathology=db.selectOnePathology(pathologyID);
+        if(pathology==null){
+            db.close();
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .entity(new DefaultRespondEntity("resource that to be deleted doesn't existed in db"))
+                    .build();
+        }else{
+            db.deletePathology(pathologyID);
+            db.close();
+            return Response.ok(new DefaultRespondEntity()).build();
+        }
+    }
+
+    @PUT
+    @Path("generalInformation/updatePathology")
+    @Secured(UserRole.ADMIN)
+    @JSONP(queryParam = "callback")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updatePathology(Pathology requestPathology){
+        Database db=new Database();
+        Pathology tempPathology=db.selectOnePathology(requestPathology.getId());
+        if(tempPathology==null){
+            db.close();
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .entity(new DefaultRespondEntity("resource that to be updated doesn't existed in db"))
+                    .build();
+        }else{
+            db.updatePathology(requestPathology);
+            db.close();
+            return Response.ok(new DefaultRespondEntity()).build();
+        }
+    }
+
+    @POST
+    @Path("generalInformation/addPathology")
+    @Secured(UserRole.ADMIN)
+    @JSONP(queryParam = "callback")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addPathology(Pathology requestPathology){
+        try{
+            if(requestPathology.getId()==null || requestPathology.getId().equals("")){
+                throw new ArgumentException();
+            }
+            Database db=new Database();
+            db.addPathology(requestPathology);
+            db.close();
+            return Response.ok(new DefaultRespondEntity()).build();
+        }catch (ArgumentException e){
+            return Response.status(Response.Status.BAD_REQUEST).entity(new DefaultRespondEntity(e.getMessage())).build();
+        }
+
+    }
+
     /**
      * radiology apis
      *
@@ -229,12 +307,91 @@ public class GeneralInformationAPI {
 
     @GET
     @Path("generalInformation/radiologies")
-    @Secured(UserRole.PATIENT)
+    @Secured({UserRole.PATIENT,UserRole.ADMIN})
     @JSONP(queryParam = "callback")
     @Produces(MediaType.APPLICATION_JSON)
     public Response listAllRadiologies(){
         Database db=new Database();
         List<Radiology> results=db.selectAllRadiologies();
         return Response.ok(results).build();
+    }
+
+
+    @GET
+    @Path("generalInformation/oneRadiology/{radiologyID}")
+    @Secured({UserRole.ADMIN,UserRole.PATIENT})
+    @JSONP(queryParam = "callback")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listOneRadiology(
+            @PathParam("radiologyID") String radiologyID){
+        Database db=new Database();
+        Radiology radiology=db.selectOneRadiology(radiologyID);
+        db.close();
+        return Response.ok(radiology).build();
+    }
+
+    @DELETE
+    @Path("generalInformation/deleteRadiology/{radiologyID}")
+    @Secured(UserRole.ADMIN)
+    @JSONP(queryParam = "callback")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteRadiology(
+            @PathParam("radiologyID") String radiologyID){
+        Database db=new Database();
+        Radiology radiology=db.selectOneRadiology(radiologyID);
+        if(radiology==null){
+            db.close();
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .entity(new DefaultRespondEntity("resource that to be deleted doesn't existed in db"))
+                    .build();
+        }else{
+            db.deleteRadiology(radiologyID);
+            db.close();
+            return Response.ok(new DefaultRespondEntity()).build();
+        }
+    }
+
+    @PUT
+    @Path("generalInformation/updateRadiology")
+    @Secured(UserRole.ADMIN)
+    @JSONP(queryParam = "callback")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateRadiology(Radiology requestRadiology){
+        Database db=new Database();
+        Radiology tempRadiology=db.selectOneRadiology(requestRadiology.getId());
+        if(tempRadiology==null){
+            db.close();
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .entity(new DefaultRespondEntity("resource that to be updated doesn't existed in db"))
+                    .build();
+        }else{
+            db.updateRadiology(requestRadiology);
+            db.close();
+            return Response.ok(new DefaultRespondEntity()).build();
+        }
+    }
+
+    @POST
+    @Path("generalInformation/addRadiology")
+    @Secured(UserRole.ADMIN)
+    @JSONP(queryParam = "callback")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addRadiology(Radiology requestRadiology){
+        try{
+            if(requestRadiology.getId()==null || requestRadiology.getId().equals("")){
+                throw new ArgumentException();
+            }
+            Database db=new Database();
+            db.addRadiology(requestRadiology);
+            db.close();
+            return Response.ok(new DefaultRespondEntity()).build();
+        }catch (ArgumentException e){
+            return Response.status(Response.Status.BAD_REQUEST).entity(new DefaultRespondEntity(e.getMessage())).build();
+        }
+
     }
 }

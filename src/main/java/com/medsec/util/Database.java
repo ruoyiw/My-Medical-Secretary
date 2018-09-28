@@ -249,6 +249,29 @@ public class Database {
         }
     }
 
+    public Pathology selectOnePathology(String pathologyID){
+        PathologyMapper mapper=session.getMapper(PathologyMapper.class);
+        return mapper.selectOnePathology(pathologyID);
+    }
+
+    public void addPathology(Pathology pathology){
+        PathologyMapper mapper=session.getMapper(PathologyMapper.class);
+        mapper.addPathology(pathology);
+        session.commit();
+    }
+
+    public void deletePathology(String pathologyID){
+        PathologyMapper mapper=session.getMapper(PathologyMapper.class);
+        mapper.deletePathology(pathologyID);
+        session.commit();
+    }
+
+    public void updatePathology(Pathology pathology){
+        PathologyMapper mapper=session.getMapper(PathologyMapper.class);
+        mapper.updatePathology(pathology);
+        session.commit();
+    }
+
     /*
     Radiology
      */
@@ -261,6 +284,30 @@ public class Database {
             if(!keepAlive) close();
         }
     }
+
+    public Radiology selectOneRadiology(String radiologyID){
+        RadiologyMapper mapper=session.getMapper(RadiologyMapper.class);
+        return mapper.selectOneRadiology(radiologyID);
+    }
+
+    public void addRadiology(Radiology radiology){
+        RadiologyMapper mapper=session.getMapper(RadiologyMapper.class);
+        mapper.addRadiology(radiology);
+        session.commit();
+    }
+
+    public void deleteRadiology(String radiologyID){
+        RadiologyMapper mapper=session.getMapper(RadiologyMapper.class);
+        mapper.deleteRadiology(radiologyID);
+        session.commit();
+    }
+
+    public void updateRadiology(Radiology radiology){
+        RadiologyMapper mapper=session.getMapper(RadiologyMapper.class);
+        mapper.updateRadiology(radiology);
+        session.commit();
+    }
+
 
     @Override
     protected void finalize() {
