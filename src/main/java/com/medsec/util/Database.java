@@ -211,6 +211,17 @@ public class Database {
             if(!keepAlive) close();
         }
     }
+    /*
+    File
+     */
+    public String getLink(String pid){
+        try{
+            FileMapper mapper = session.getMapper(FileMapper.class);
+            return mapper.getLink(pid);
+        } finally {
+            if(!keepAlive) close();
+        }
+    }
 
     /*
     Notification token
