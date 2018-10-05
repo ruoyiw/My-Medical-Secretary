@@ -68,21 +68,23 @@ public class PushNotification {
          */
         //1. Convert the whole Appointment object to JsonObject, then add the appointment JsonObject as the value of
         //   appointment property in the dataObject
+        //   Example: {"appointment":{"id":"3","uid":"1","title":"Radiology","duration":60}}
         JsonObject appointmentJson = objectToJsonObject(newAppointment);
         dataObject.add("appointment", appointmentJson);
 
         //2. Add appointment attributes as key-value pairs in the dataObject one by one
-        dataObject.addProperty("id", newAppointment.getId());
-        dataObject.addProperty("uid", newAppointment.getUid());
-        dataObject.addProperty("title", newAppointment.getTitle());
-        dataObject.addProperty("date_create", newAppointment.getDate_create().toString());
-        dataObject.addProperty("date_change", newAppointment.getDate_change().toString());
-        dataObject.addProperty("date", newAppointment.getDate().toString());
-        dataObject.addProperty("duration", newAppointment.getDuration().toString());
-        dataObject.addProperty("detail", newAppointment.getDetail());
-        dataObject.addProperty("note", newAppointment.getNote());
-        dataObject.addProperty("user_note", newAppointment.getUser_note());
-        dataObject.addProperty("status", newAppointment.getStatus().toString());
+        //   Example: {"id":"3","uid":"1","title":"Radiology","duration":60}}
+//        dataObject.addProperty("id", newAppointment.getId());
+//        dataObject.addProperty("uid", newAppointment.getUid());
+//        dataObject.addProperty("title", newAppointment.getTitle());
+//        dataObject.addProperty("date_create", newAppointment.getDate_create().toString());
+//        dataObject.addProperty("date_change", newAppointment.getDate_change().toString());
+//        dataObject.addProperty("date", newAppointment.getDate().toString());
+//        dataObject.addProperty("duration", newAppointment.getDuration().toString());
+//        dataObject.addProperty("detail", newAppointment.getDetail());
+//        dataObject.addProperty("note", newAppointment.getNote());
+//        dataObject.addProperty("user_note", newAppointment.getUser_note());
+//        dataObject.addProperty("status", newAppointment.getStatus().toString());
 
         this.dataObject = dataObject;
 

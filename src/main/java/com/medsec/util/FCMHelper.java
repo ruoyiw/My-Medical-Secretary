@@ -147,6 +147,7 @@ public class FCMHelper {
         BasicResponseHandler responseHandler = new BasicResponseHandler();
         String response = (String) httpClient.execute(httpPost, responseHandler);
 
+        System.out.println("request: " + data);
         return response;
     }
 
