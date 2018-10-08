@@ -75,6 +75,7 @@ public class ConfigListener implements ServletContextListener{
             configuration.addMapper(PathologyMapper.class);
             configuration.addMapper(RadiologyMapper.class);
             configuration.addMapper(NotificationTokenMapper.class);
+            configuration.addMapper(FileMapper.class);
 
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
 
