@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import javax.annotation.Nullable;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -171,6 +172,32 @@ public class Database {
         }
     }
 
+    public Hospital selectOneHospital(String hospitalID){
+        HospitalMapper mapper=session.getMapper(HospitalMapper.class);
+        return mapper.selectOneHospital(hospitalID);
+    }
+
+    public void deleteHospital(String hospitalID){
+        HospitalMapper mapper=session.getMapper(HospitalMapper.class);
+        mapper.deleteHospital(hospitalID);
+        session.commit();
+
+    }
+
+    public void updateHospital(Hospital hospital){
+        HospitalMapper mapper=session.getMapper(HospitalMapper.class);
+        mapper.updateHospital(hospital);
+        session.commit();
+
+    }
+
+    public void addHospital(Hospital hospital){
+        HospitalMapper mapper=session.getMapper(HospitalMapper.class);
+        mapper.addHospital(hospital);
+        session.commit();
+
+    }
+
     /*
     Doctor
      */
@@ -183,6 +210,29 @@ public class Database {
         } finally {
             if(!keepAlive) close();
         }
+    }
+
+    public Doctor selectOneDoctor(String doctorID){
+        DoctorMapper mapper=session.getMapper(DoctorMapper.class);
+        return mapper.selectOneDoctor(doctorID);
+    }
+
+    public void deleteDoctor(String doctorID){
+        DoctorMapper mapper=session.getMapper(DoctorMapper.class);
+        mapper.deleteDoctor(doctorID);
+        session.commit();
+    }
+
+    public void updateDoctor(Doctor doctor){
+        DoctorMapper mapper=session.getMapper(DoctorMapper.class);
+        mapper.updateDoctor(doctor);
+        session.commit();
+    }
+
+    public void addDoctor(Doctor doctor){
+        DoctorMapper mapper=session.getMapper(DoctorMapper.class);
+        mapper.addDoctor(doctor);
+        session.commit();
     }
 
     /*
@@ -198,6 +248,29 @@ public class Database {
         }
     }
 
+    public Pathology selectOnePathology(String pathologyID){
+        PathologyMapper mapper=session.getMapper(PathologyMapper.class);
+        return mapper.selectOnePathology(pathologyID);
+    }
+
+    public void addPathology(Pathology pathology){
+        PathologyMapper mapper=session.getMapper(PathologyMapper.class);
+        mapper.addPathology(pathology);
+        session.commit();
+    }
+
+    public void deletePathology(String pathologyID){
+        PathologyMapper mapper=session.getMapper(PathologyMapper.class);
+        mapper.deletePathology(pathologyID);
+        session.commit();
+    }
+
+    public void updatePathology(Pathology pathology){
+        PathologyMapper mapper=session.getMapper(PathologyMapper.class);
+        mapper.updatePathology(pathology);
+        session.commit();
+    }
+
     /*
     Radiology
      */
@@ -210,6 +283,99 @@ public class Database {
             if(!keepAlive) close();
         }
     }
+    /*
+    File
+     */
+    public String getLink(String pid){
+        try{
+            FileMapper mapper = session.getMapper(FileMapper.class);
+            return mapper.getLink(pid);
+        } finally {
+            if(!keepAlive) close();
+        }
+    }
+
+    public Radiology selectOneRadiology(String radiologyID){
+        RadiologyMapper mapper=session.getMapper(RadiologyMapper.class);
+        return mapper.selectOneRadiology(radiologyID);
+    }
+
+    public void addRadiology(Radiology radiology){
+        RadiologyMapper mapper=session.getMapper(RadiologyMapper.class);
+        mapper.addRadiology(radiology);
+        session.commit();
+    }
+
+    public void deleteRadiology(String radiologyID){
+        RadiologyMapper mapper=session.getMapper(RadiologyMapper.class);
+        mapper.deleteRadiology(radiologyID);
+        session.commit();
+    }
+
+    public void updateRadiology(Radiology radiology){
+        RadiologyMapper mapper=session.getMapper(RadiologyMapper.class);
+        mapper.updateRadiology(radiology);
+        session.commit();
+    }
+
+
+
+    /*
+    Notification token
+     */
+    public void insertUserFcmToken(String uid, String fcmToken) {
+
+        try {
+
+            NotificationTokenMapper mapper = session.getMapper(NotificationTokenMapper.class);
+            NotificationToken token = new NotificationToken().uid(uid).fcm_token(fcmToken);
+            mapper.insertUserToken(token);
+            session.commit();
+
+        } finally {
+            if (!keepAlive) close();
+        }
+    }
+
+    public void deleteUserFcmToken(String uid, String fcmToken) {
+
+
+        try {
+
+            NotificationTokenMapper mapper = session.getMapper(NotificationTokenMapper.class);
+            NotificationToken token = new NotificationToken().uid(uid).fcm_token(fcmToken);
+            mapper.deleteUserToken(token);
+            session.commit();
+
+        } finally {
+            if (!keepAlive) close();
+        }
+    }
+
+    public ArrayList<String> getFcmTokenByUid(String uid) {
+
+        try {
+
+            NotificationTokenMapper mapper = session.getMapper(NotificationTokenMapper.class);
+            return mapper.getTokensByUserId(uid);
+
+        } finally {
+            if (!keepAlive) close();
+        }
+    }
+
+    public NotificationToken getUserFcmToken(String fcm_token) {
+
+        try {
+
+            NotificationTokenMapper mapper = session.getMapper(NotificationTokenMapper.class);
+            return mapper.getUserByToken(fcm_token);
+
+        } finally {
+            if (!keepAlive) close();
+        }
+    }
+
 
     public void insertUser(User user) {
         try {

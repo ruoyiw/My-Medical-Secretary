@@ -10,6 +10,6 @@
 
     <hr>
     <small>Copyright &copy; Medical Secretary Development Team, 2018.</small>
-    <small id="version">Manually built and deployed.</small>
+    <small id="version">Automatically built and deployed. Build date: Tue Sep 25 14:17:56 AEST 2018</small>
 </body>
 </html>

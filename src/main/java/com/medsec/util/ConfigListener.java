@@ -2,6 +2,7 @@ package com.medsec.util;
 
 import com.medsec.base.Config;
 import com.medsec.dao.*;
+import com.medsec.entity.NotificationToken;
 import com.medsec.entity.Pathology;
 import org.apache.commons.configuration2.PropertiesConfiguration;
 import org.apache.commons.configuration2.builder.fluent.Configurations;
