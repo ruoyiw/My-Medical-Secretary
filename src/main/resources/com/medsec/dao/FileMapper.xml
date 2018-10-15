@@ -5,6 +5,7 @@
 <mapper namespace="com.medsec.dao.FileMapper">
     <select id="getLink" parameterType="String" resultType="String">
         SELECT link FROM File WHERE pid = #{pid}
+    </select>
     <insert id="insertFile" parameterType="com.medsec.entity.File">
         INSERT INTO file (id, title, link, pid)
         VALUES (#{id}, #{title}, #{link}, #{pid});
