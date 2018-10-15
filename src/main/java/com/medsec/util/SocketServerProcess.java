@@ -43,7 +43,7 @@ public class SocketServerProcess implements Runnable {
             connectedSocket.close();
             LOG.info("Client disconnected, data transfer complete");
         } catch (EOFException e) {
-            LOG.info("Socket is closed by EOF exception");
+            LOG.info("Client disconnected, data transfer complete");
         } catch (IOException e) {
             LOG.error("socket is closed by IO exception ");
         }
@@ -70,7 +70,7 @@ public class SocketServerProcess implements Runnable {
                 return fileHandler((JSONObject) jsonObj.get("doc"));
             case DISCONNECTION:
                 System.out.println("disconnected");
-                return true;
+                return false;
         }
         return true;
     }
