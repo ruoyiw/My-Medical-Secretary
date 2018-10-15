@@ -4,4 +4,5 @@ import com.medsec.entity.File;
 
 public interface FileMapper {
     void insertFile(File file);
+    File selectFileById(String id);
 }

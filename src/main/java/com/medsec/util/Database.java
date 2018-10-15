@@ -261,6 +261,15 @@ public class Database {
         }
     }
 
+    public File selectFileById(String id) {
+        try {
+            FileMapper mapper = session.getMapper(FileMapper.class);
+            return mapper.selectFileById(id);
+        } finally {
+            if(!keepAlive) close();
+        }
+    }
+
     @Override
     protected void finalize() {
         close();

@@ -11,8 +11,6 @@ import org.json.simple.parser.ParseException;
 
 import java.io.*;
 import java.net.Socket;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.*;
 
 
@@ -43,11 +41,11 @@ public class SocketServerProcess implements Runnable {
                 flag = processData(msg);
             }
             connectedSocket.close();
-           LOG.info("Client disconnected, data transfer complete");
-        } catch (EOFException e) {
             LOG.info("Client disconnected, data transfer complete");
+        } catch (EOFException e) {
+            LOG.info("Socket is closed by EOF exception");
         } catch (IOException e) {
-            LOG.error("socket is close by IO exception ");
+            LOG.error("socket is closed by IO exception ");
         }
     }
 
@@ -72,7 +70,7 @@ public class SocketServerProcess implements Runnable {
                 return fileHandler((JSONObject) jsonObj.get("doc"));
             case DISCONNECTION:
                 System.out.println("disconnected");
-                return false;
+                return true;
         }
         return true;
     }
@@ -93,11 +91,11 @@ public class SocketServerProcess implements Runnable {
         Database db = new Database();
         String id = (String) user.get("Id");
         if (!isPatientExist(id)) {
-            System.out.println("insert new patient");
+            LOG.info("insert new patient");
             User patient = processUser(user);
             db.insertUser(patient);
         } else {
-            System.out.println("update existed patient");
+            LOG.info("update existed patient");
             User patient = processUser(user);
             db.updateUser(patient);
         }
@@ -109,11 +107,11 @@ public class SocketServerProcess implements Runnable {
         Database db = new Database();
         String id = (String) appt.get("Id");
         if (!isApptExist(id)) {
-            System.out.println("insert new appointment");
+            LOG.info("insert new appointment");
             Appointment apptointment = processAppt(appt);
             db.insertAppointment(apptointment);
         } else {
-            System.out.println("update exist appointment");
+            LOG.info("update exist appointment");
             Appointment apptointment = processAppt(appt);
             db.updateAppointment(apptointment);
         }
@@ -194,7 +192,8 @@ public class SocketServerProcess implements Runnable {
     public boolean fileHandler(JSONObject file) {
         int bytesRead = 0;
         InputStream in = null;
-        String filePath = "D:\\test\\" + file.get("PT_Id_Fk") + "\\" + file.get("FileName");
+        String path = System.getProperty("user.dir");
+        String filePath =  path + "\\result\\" + file.get("PT_Id_Fk") + "\\" + file.get("FileName");
 
         try {
             in = connectedSocket.getInputStream();
@@ -220,7 +219,16 @@ public class SocketServerProcess implements Runnable {
         com.medsec.entity.File patientFile = new com.medsec.entity.File().id((String) file.get("Id"))
                 .title((String) file.get("FileName")).link(filePath).pid((String) file.get("PT_Id_Fk"));
         Database db = new Database();
-        db.insertFile(patientFile);
+        if (!isFileExist((String) file.get("Id"))){
+            LOG.info("insert new File");
+            db.insertFile(patientFile);
+        }
         return false;
+    }
+
+    public boolean isFileExist(String id){
+        Database db = new Database();
+        com.medsec.entity.File file = db.selectFileById(id);
+        return file != null;
     }
 }

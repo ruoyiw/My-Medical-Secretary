@@ -7,4 +7,7 @@
         INSERT INTO file (id, title, link, pid)
         VALUES (#{id}, #{title}, #{link}, #{pid});
     </insert>
+    <select id="selectFileById" parameterType="String" resultType="com.medsec.entity.File">
+        SELECT * FROM file WHERE id= #{id}
+    </select>
 </mapper>
