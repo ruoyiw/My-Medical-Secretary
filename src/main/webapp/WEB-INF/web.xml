@@ -32,6 +32,9 @@
     <listener>
         <listener-class>com.medsec.util.ConfigListener</listener-class>
     </listener>
+    <listener>
+        <listener-class>com.medsec.util.SocketServerListener</listener-class>
+    </listener>
 
     <filter>
         <filter-name>log4jServletFilter</filter-name>

@@ -1,16 +1,16 @@
 package com.medsec.entity;
 
 public class File {
-    private int id;
+    private String id;
     private String title;
     private String link;
     private String pid;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -37,6 +37,27 @@ public class File {
     public void setPid(String pid) {
         this.pid = pid;
     }
+
+    public File id(final String id) {
+        this.id = id;
+        return this;
+    }
+
+    public File title(final String title) {
+        this.title = title;
+        return this;
+    }
+
+    public File link(final String link) {
+        this.link = link;
+        return this;
+    }
+
+    public File pid(final String pid) {
+        this.pid = pid;
+        return this;
+    }
+
 
 
 }

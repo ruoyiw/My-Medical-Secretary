@@ -27,4 +27,8 @@ public interface AppointmentMapper {
     void updateUserNoteById(Appointment appointment);
 
     void updateStatusById(Appointment appointment);
+
+    void insertAppointment(Appointment appointment);
+
+    void updateAppointment(Appointment appointment);
 }
