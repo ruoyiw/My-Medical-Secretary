@@ -47,7 +47,7 @@
     </update>
 
     <insert id="insertAppointment" parameterType="com.medsec.entity.Appointment">
-        INSERT INTO appointment (id, uid, title, date_create, date_change, date, duration, detail, note, status)
+        INSERT INTO Appointment (id, uid, title, date_create, date_change, date, duration, detail, note, status)
         VALUES (#{id}, #{uid}, #{title}, #{date_create}, #{date_change},#{date},#{duration},#{detail},#{note},#{status});
     </insert>
 
