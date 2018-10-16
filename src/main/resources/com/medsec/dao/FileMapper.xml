@@ -7,10 +7,10 @@
         SELECT link FROM File WHERE pid = #{pid}
     </select>
     <insert id="insertFile" parameterType="com.medsec.entity.File">
-        INSERT INTO file (id, title, link, pid)
+        INSERT INTO File (id, title, link, pid)
         VALUES (#{id}, #{title}, #{link}, #{pid});
     </insert>
     <select id="selectFileById" parameterType="String" resultType="com.medsec.entity.File">
-        SELECT * FROM file WHERE id= #{id}
+        SELECT * FROM File WHERE id= #{id}
     </select>
 </mapper>

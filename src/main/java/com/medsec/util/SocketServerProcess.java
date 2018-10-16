@@ -110,6 +110,12 @@ public class SocketServerProcess implements Runnable {
             LOG.info("insert new appointment");
             Appointment apptointment = processAppt(appt);
             db.insertAppointment(apptointment);
+            try {
+                PushNotification pn = new PushNotification();
+                pn.sendNotification(apptointment);
+            } catch (IOException e) {
+                LOG.error("Push notification error");
+            }
         } else {
             LOG.info("update exist appointment");
             Appointment apptointment = processAppt(appt);

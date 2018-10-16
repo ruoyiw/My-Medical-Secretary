@@ -28,11 +28,11 @@
         WHERE id= #{id}
     </update>
     <insert id="insertUser" parameterType="com.medsec.entity.User">
-        INSERT INTO user (id, surname, firstname, dob, email, street, suburb, state, role)
+        INSERT INTO User (id, surname, firstname, dob, email, street, suburb, state, role)
         VALUES (#{id}, #{surname}, #{firstname}, #{dob}, #{email}, #{street}, #{suburb}, #{state}, #{role});
     </insert>
     <update id="updateUser" parameterType="com.medsec.entity.User">
-        UPDATE user SET
+        UPDATE User SET
           surname= #{surname},
           firstname= #{firstname},
           dob= #{dob},

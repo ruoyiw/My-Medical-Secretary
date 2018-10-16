@@ -52,7 +52,7 @@
     </insert>
 
     <update id="updateAppointment" parameterType="com.medsec.entity.Appointment">
-        UPDATE appointment SET
+        UPDATE Appointment SET
         title= #{title},
         date_create= #{date_create},
         date_change= #{date_change},
