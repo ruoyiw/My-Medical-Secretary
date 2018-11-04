@@ -6,4 +6,16 @@
     <select id="getTokenByUid" resultType="String">
       select token from Patient where id = #{id}
   </select>
+
+    <update id="signUp" parameterType="com.medsec.entity.Patient">
+        UPDATE Patient set password=#{password} where id=#{id}
+    </update>
+
+    <select id="selectbyEmail" parameterType="String" resultType="com.medsec.entity.Patient">
+        select * from Patient where email=#{email}
+    </select>
+
+    <select id="logIn" resultType="com.medsec.entity.Patient">
+        UPDATE Patient set token=#{token}, token_expire_date=#{token_expire_date} where id=#{id}
+    </select>
 </mapper>

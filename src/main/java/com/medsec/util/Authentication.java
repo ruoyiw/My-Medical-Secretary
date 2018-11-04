@@ -3,6 +3,7 @@ package com.medsec.util;
 import com.medsec.dao.PatientMapper;
 import org.apache.ibatis.session.SqlSession;
 
+@Deprecated
 public class Authentication {
     public static boolean auth(String uid, String token) {
         boolean result = false;
